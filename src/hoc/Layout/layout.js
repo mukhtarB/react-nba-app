@@ -8,7 +8,7 @@ class Layout extends Component {
                 <hr />
                 Current Page: {this.props.children}
                 <hr />
-                Children
+                Footer
             </div>
         )
     }
