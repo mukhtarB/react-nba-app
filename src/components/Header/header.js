@@ -1,8 +1,9 @@
 import React from "react";
-import style from './header.module.css';
 import { Link } from 'react-router-dom';
 
+import style from './header.module.css';
 import FontAwesome from "react-fontawesome";
+
 import SideNavigation from "./SideNav/SideNav";
 
 const Header = (props) => {
