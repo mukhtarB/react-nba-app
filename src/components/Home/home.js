@@ -5,8 +5,14 @@ import NewsSlider from "../../widgets/NewsSlider/slider";
 const Home = () => {
     return (
         <div>
-            <NewsSlider />
-            Other stuff to go on home.
+            <NewsSlider
+                type='featured'
+                start={3}
+                amount={6}
+                settings={{
+                    dots: false
+                }}
+            />
         </div>
     )
 }
