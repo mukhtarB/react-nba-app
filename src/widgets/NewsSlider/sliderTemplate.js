@@ -1,9 +1,11 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
+import style from './slider.module.css';
 import Slider from "react-slick";
 
 const SliderTemplate = (props) => {
-    // console.log(props)
+    let template = null;
 
     const settings = {
         dots: true,
@@ -14,12 +16,40 @@ const SliderTemplate = (props) => {
         SlidesToScroll:1
     }
 
+    switch (props.type) {
+        case ('featured'):
+
+        template = props.data.map( (item, i) => {
+            return (
+                <div key={i}>
+                    <div className = {style.featured_item}>
+                        <div className = {style.featured_image}
+                            style ={{
+                                background: `url(../images/articles/${item.image})`
+                            }}
+                        >
+                        
+                        </div>
+                        <Link to ={`/articles/${item.id}`}>
+                            <div className={style.featured_caption}>
+                                {item.title}
+                            </div>
+                        </Link>
+                    </div>
+                </div>
+            )
+        })
+            
+            break;
+    
+        default:
+            template = null;
+            break;
+    }
+
     return (
         <Slider {...settings}>
-            <div> Template 1 </div>
-            <div> Template 2 </div>
-            <div> Template 3 </div>
-            <div> Template 4 </div>
+            {template}
         </Slider>
     )
 }
