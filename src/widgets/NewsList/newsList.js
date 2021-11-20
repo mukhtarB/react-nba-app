@@ -44,13 +44,20 @@ class NewsList extends Component {
             case ('card'):
                 template = this.state.items.map( (item, i) => {
                     return (
-                        <div>
+                        <CSSTransition
+                            classNames={{
+                                enter: style.newsList_wrapper,
+                                enterActive: style.newsList_wrapper_enter
+                            }}
+                            timeout={500}
+                            key={i}
+                        >
                             <div className={style.newsList_item}>
                                 <Link to = {`/articles/${item.id}`}>
                                     <h2>{item.title}</h2>
                                 </Link>
                             </div>
-                        </div>
+                        </CSSTransition>
                     )
                 })
                 break;
@@ -66,7 +73,13 @@ class NewsList extends Component {
     render () {
         return (
             <div>
-                { this.renderNews(this.props.type) }
+                <TransitionGroup
+                    component="div"
+                    className="list"
+                >
+                    { this.renderNews(this.props.type) }
+                </TransitionGroup>
+                
                 <button onClick = {() => this.loadMore()}> load more </button>
             </div>
         )
