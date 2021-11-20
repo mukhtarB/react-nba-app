@@ -5,6 +5,7 @@ import style from './videosList.module.css';
 
 import { url } from "../../config";
 import Button from "../Buttons/button";
+import VideosListTemplate from "./videosListTemplate";
 
 class VideoList extends Component {
 
@@ -44,8 +45,24 @@ class VideoList extends Component {
             : null
     }
 
+    renderVideos = ()  => {
+        let template = null;
+
+        switch (this.props.type) {
+            case 'card':
+                template = <VideosListTemplate data={this.state.videos} teams={this.state.teams} />
+                break;
+        
+            default:
+                template = null;
+                break;
+        }
+
+        return template
+    }
+
     loadMore = () => {
-        console.log('true')
+        console.log('true_')
     }
 
     renderButton = () => {
@@ -59,9 +76,12 @@ class VideoList extends Component {
     }
 
     render () {
+        // console.log(this.state.videos)
+        // console.log(this.state.teams)
         return (
             <div className={style.videoList_wrapper}>
                 { this.renderTitle() }
+                { this.renderVideos() }
                 { this.renderButton() }
             </div>
         )
