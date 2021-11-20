@@ -22,10 +22,25 @@ class VideoList extends Component {
             : null
     }
 
+    loadMore = () => {
+        console.log('true')
+    }
+
+    renderButton = () => {
+        return this.props.loadmore ? 
+            <Button
+                type="load_more" 
+                loadMore={() => {this.loadMore()}}
+                cta="load more videos"
+            />
+            : <Button type="linkTo" cta="More videos" linkTo = "/vidoes" />
+    }
+
     render () {
         return (
             <div className={style.videoList_wrapper}>
                 { this.renderTitle() }
+                { this.renderButton() }
             </div>
         )
     }
