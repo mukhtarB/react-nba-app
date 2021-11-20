@@ -28,13 +28,13 @@ const SideNavItems = () => {
         },
         {
             type: style.option,
-            icon: 'sign-in',
+            icon: 'sign-in-alt',
             text: 'Sign In',
             link: '/sign-in'
         },
         {
             type: style.option,
-            icon: 'sign-out',
+            icon: 'sign-out-alt',
             text: 'Sign Out',
             link: '/sign-out'
         },
