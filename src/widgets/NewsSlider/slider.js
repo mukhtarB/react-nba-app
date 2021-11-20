@@ -3,14 +3,16 @@ import axios from "axios";
 
 import SliderTemplate from "./sliderTemplate";
 
+import { url } from '../../config';
+
 class NewsSlider extends Component {
 
     state = {
         news: []
     }
 
-    componentWillMount () {
-        axios.get(`http://localhost:3003/articles?_start=${this.props.start}&_end=${this.props.amount}`)
+    UNSAFE_componentWillMount () {
+        axios.get(`${url}/articles?_start=${this.props.start}&_end=${this.props.amount}`)
         .then ( (response) => {
             this.setState({
                 news: response.data
