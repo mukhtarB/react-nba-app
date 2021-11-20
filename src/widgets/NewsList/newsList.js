@@ -8,7 +8,7 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { url } from '../../config';
 
 import Button from "../Buttons/button";
-import TeamCardInfo from "../Buttons/CardInfo/teamcardInfo";
+import TeamCardInfo from "../CardInfo/teamcardInfo";
 
 class NewsList extends Component {
 
