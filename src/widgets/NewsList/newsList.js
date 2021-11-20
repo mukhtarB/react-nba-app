@@ -5,7 +5,9 @@ import axios from 'axios';
 import style from './newsList.module.css';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
-import { url } from '../../config'
+import { url } from '../../config';
+
+import Button from "../Buttons/button";
 
 class NewsList extends Component {
 
@@ -80,7 +82,12 @@ class NewsList extends Component {
                     { this.renderNews(this.props.type) }
                 </TransitionGroup>
                 
-                <button onClick = {() => this.loadMore()}> load more </button>
+                {/* <button onClick = {() => this.loadMore()}> load more </button> */}
+                <Button
+                    type="load_more"
+                    loadMore={() => this.loadMore}
+                    cta="load more"
+                />
             </div>
         )
     }
