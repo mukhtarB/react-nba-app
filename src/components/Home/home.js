@@ -1,6 +1,7 @@
 import React from "react";
 
 import NewsSlider from "../../widgets/NewsSlider/slider";
+import NewsList from "../../widgets/NewsList/newsList";
 
 const Home = () => {
     return (
@@ -13,6 +14,9 @@ const Home = () => {
                     dots: false
                 }}
             />
+
+            <NewsList />
+
         </div>
     )
 }
