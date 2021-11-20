@@ -16,10 +16,16 @@ class VideoList extends Component {
         end: this.props.start + this.props.amount,
     }
 
+    renderTitle = () => {
+        return this.props.title ? 
+            <h3> <strong>NBA</strong> Videos </h3>
+            : null
+    }
+
     render () {
         return (
-            <div>
-                Video Component
+            <div className={style.videoList_wrapper}>
+                { this.renderTitle() }
             </div>
         )
     }
