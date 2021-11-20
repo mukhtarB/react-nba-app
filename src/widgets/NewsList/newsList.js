@@ -8,10 +8,12 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { url } from '../../config';
 
 import Button from "../Buttons/button";
+import TeamCardInfo from "../Buttons/CardInfo/teamcardInfo";
 
 class NewsList extends Component {
 
     state = {
+        teams: [],
         items: [],
         start: this.props.start,
         amount: this.props.amount,
@@ -24,6 +26,16 @@ class NewsList extends Component {
     }
 
     request = (start, end) => {
+
+        if (!this.state.teams.length) {
+            axios.get(`${url}/teams`)
+            .then( response => {
+                this.setState({
+                    teams: response.data
+                })
+            })
+        }
+
         axios.get(`${url}/articles?_start=${start}&_end=${end}`)
         .then ( (response) => {
             this.setState({
@@ -56,6 +68,7 @@ class NewsList extends Component {
                         >
                             <div className={style.newsList_item}>
                                 <Link to = {`/articles/${item.id}`}>
+                                    <TeamCardInfo teams={this.state.teams} team_id={item.team} date={item.date} />
                                     <h2>{item.title}</h2>
                                 </Link>
                             </div>
@@ -82,7 +95,6 @@ class NewsList extends Component {
                     { this.renderNews(this.props.type) }
                 </TransitionGroup>
                 
-                {/* <button onClick = {() => this.loadMore()}> load more </button> */}
                 <Button
                     type="load_more"
                     loadMore={() => this.loadMore}
