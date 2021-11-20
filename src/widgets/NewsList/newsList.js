@@ -12,6 +12,7 @@ import Button from "../Buttons/button";
 class NewsList extends Component {
 
     state = {
+        teams: [],
         items: [],
         start: this.props.start,
         amount: this.props.amount,
@@ -24,6 +25,16 @@ class NewsList extends Component {
     }
 
     request = (start, end) => {
+
+        if (!this.state.teams.length) {
+            axios.get(`${url}/teams`)
+            .then( response => {
+                this.setState({
+                    teams: response.data
+                })
+            })
+        }
+
         axios.get(`${url}/articles?_start=${start}&_end=${end}`)
         .then ( (response) => {
             this.setState({
@@ -82,7 +93,6 @@ class NewsList extends Component {
                     { this.renderNews(this.props.type) }
                 </TransitionGroup>
                 
-                {/* <button onClick = {() => this.loadMore()}> load more </button> */}
                 <Button
                     type="load_more"
                     loadMore={() => this.loadMore}
