@@ -8,6 +8,7 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { url } from '../../config';
 
 import Button from "../Buttons/button";
+import TeamCardInfo from "../Buttons/CardInfo/teamcardInfo";
 
 class NewsList extends Component {
 
@@ -67,6 +68,7 @@ class NewsList extends Component {
                         >
                             <div className={style.newsList_item}>
                                 <Link to = {`/articles/${item.id}`}>
+                                    <TeamCardInfo teams={this.state.teams} team_id={item.team} date={item.date} />
                                     <h2>{item.title}</h2>
                                 </Link>
                             </div>
