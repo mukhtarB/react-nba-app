@@ -16,6 +16,28 @@ class VideoList extends Component {
         end: this.props.start + this.props.amount,
     }
 
+    UNSAFE_componentWillMount () {
+        this.request (this.state.start, this.state.end)
+    }
+
+    request = (start, end) => {
+        if(!this.state.teams.length) {
+            axios.get(`${url}/teams`)
+            .then( response => {
+                this.setState({
+                    teams: response.data
+                })
+            })
+        }
+
+        axios.get(`${url}/videos?_start=${start}&_end=${end}`)
+        .then ( response => {
+            this.setState({
+                videos: [...this.state.videos, ...response.data]
+            })
+        })
+    }
+
     renderTitle = () => {
         return this.props.title ? 
             <h3> <strong>NBA</strong> Videos </h3>
