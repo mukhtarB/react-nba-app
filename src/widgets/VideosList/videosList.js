@@ -62,7 +62,10 @@ class VideoList extends Component {
     }
 
     loadMore = () => {
-        console.log('true_')
+        let start = this.state.end;
+        let end = this.state.end + this.state.amount;
+
+        this.request(start, end);
     }
 
     renderButton = () => {

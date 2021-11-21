@@ -9,7 +9,7 @@ const Button = (props) => {
     switch (props.type) {
         case ('load_more'):
             template = (
-                <button className = {style.blue_btn} onClick={props.loadMore()}>
+                <button className = {style.blue_btn} onClick={props.loadMore}>
                     {props.cta}
                 </button>
             );

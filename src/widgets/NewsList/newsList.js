@@ -97,7 +97,7 @@ class NewsList extends Component {
                 
                 <Button
                     type="load_more"
-                    loadMore={() => this.loadMore}
+                    loadMore={() => this.loadMore()}
                     cta="load more"
                 />
             </div>
