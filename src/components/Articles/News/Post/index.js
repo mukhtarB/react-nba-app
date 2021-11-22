@@ -13,10 +13,14 @@ class NewsArticles extends Component {
         team: []
     }
 
-    
+    componentWillMount () {
+        axios.get(`${url}/articles/${this.props.params.id}`)
+        .then( response => {
+            console.log(response.data)
+        })
+    }
 
     render () {
-        console.log(this.props.params)
         return (
             <div>
                 News Article View
