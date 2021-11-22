@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 
 import Home from "./components/Home/home";
 import Layout from './hoc/Layout/layout';
+import NewsArticles from "./components/Articles/News/Post";
 
 class Routing extends Component {
     render(){
@@ -10,6 +11,7 @@ class Routing extends Component {
             <Layout>
                 <Routes>
                     <Route path='/' exact element={<Home />} />
+                    <Route path='/articles/:id' exact element={<NewsArticles />} />
                 </Routes>
             </Layout>
         )

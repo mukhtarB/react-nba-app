@@ -39,7 +39,9 @@ class NewsList extends Component {
         axios.get(`${url}/articles?_start=${start}&_end=${end}`)
         .then ( (response) => {
             this.setState({
-                items: [...this.state.items, ...response.data]
+                items: [...this.state.items, ...response.data],
+                start,
+                end
             })
         })
     }
@@ -97,7 +99,7 @@ class NewsList extends Component {
                 
                 <Button
                     type="load_more"
-                    loadMore={() => this.loadMore}
+                    loadMore={() => this.loadMore()}
                     cta="load more"
                 />
             </div>
