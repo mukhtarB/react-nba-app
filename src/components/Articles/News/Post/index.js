@@ -7,6 +7,7 @@ import withRouterHOC from "../../../../hoc/withRouter/withRouter";
 import style from '../../articles.module.css';
 
 import NewsHeader from "./newsHeader";
+import NewsBody from "./newsBody";
 
 class NewsArticles extends Component {
 
@@ -38,7 +39,7 @@ class NewsArticles extends Component {
         return (
             <div className = {style.articleWrapper}>
                 <NewsHeader />
-                {/* <newsBody /> */}
+                <NewsBody />
             </div>
         )
     }
