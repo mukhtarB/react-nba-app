@@ -6,6 +6,8 @@ import withRouterHOC from "../../../../hoc/withRouter/withRouter";
 
 import style from '../../articles.module.css';
 
+import NewsHeader from "./newsHeader";
+
 class NewsArticles extends Component {
 
     state = {
@@ -29,10 +31,14 @@ class NewsArticles extends Component {
     }
 
     render () {
-        // console.log(this.state)
+
+        const article = this.state.article;
+        const team = this.state.team;
+
         return (
-            <div>
-                News Article View
+            <div className = {style.articleWrapper}>
+                <NewsHeader />
+                {/* <newsBody /> */}
             </div>
         )
     }
