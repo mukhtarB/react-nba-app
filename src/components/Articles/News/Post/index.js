@@ -9,18 +9,27 @@ import style from '../../articles.module.css';
 class NewsArticles extends Component {
 
     state = {
-        articles: [],
+        article: [],
         team: []
     }
 
-    componentWillMount () {
+    UNSAFE_componentWillMount () {
         axios.get(`${url}/articles/${this.props.params.id}`)
         .then( response => {
-            console.log(response.data)
+            let article = response.data;
+
+            axios.get(`${url}/teams/${article.team}`)
+            .then( response => {
+                this.setState({
+                    article,
+                    team: response.data
+                })
+            })
         })
     }
 
     render () {
+        // console.log(this.state)
         return (
             <div>
                 News Article View
