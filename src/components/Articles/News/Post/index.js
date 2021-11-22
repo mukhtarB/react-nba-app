@@ -38,8 +38,13 @@ class NewsArticles extends Component {
 
         return (
             <div className = {style.articleWrapper}>
-                <NewsHeader />
-                <NewsBody />
+                <NewsHeader
+                    teamData={team[0]}
+                    date={article.date}
+                    author={article.author}
+                />
+                <NewsBody
+                />
             </div>
         )
     }
