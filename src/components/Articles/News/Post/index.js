@@ -6,6 +6,9 @@ import withRouterHOC from "../../../../hoc/withRouter/withRouter";
 
 import style from '../../articles.module.css';
 
+import NewsHeader from "./newsHeader";
+import NewsBody from "./newsBody";
+
 class NewsArticles extends Component {
 
     state = {
@@ -29,10 +32,19 @@ class NewsArticles extends Component {
     }
 
     render () {
-        // console.log(this.state)
+
+        const article = this.state.article;
+        const team = this.state.team;
+
         return (
-            <div>
-                News Article View
+            <div className = {style.articleWrapper}>
+                <NewsHeader
+                    teamData={team[0]}
+                    date={article.date}
+                    author={article.author}
+                />
+                <NewsBody
+                />
             </div>
         )
     }
