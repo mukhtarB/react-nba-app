@@ -10,9 +10,15 @@ const NewsHeader = (props) => {
         ) : null;
     }
 
+    const postData = (date, author) => {
+        // <PostData data={data} author={author} />
+        return 'Hey from postData.'
+    }
+
     return(
         <div>
             {teamInfo(props.teamData)}
+            {postData(props.date, props.author)}
         </div>
     )
 }
