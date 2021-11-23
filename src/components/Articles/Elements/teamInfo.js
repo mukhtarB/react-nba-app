@@ -1,12 +1,32 @@
 import React from "react";
 
-import styles from '../../Articles/articles.module.css';
+import style from '../../Articles/articles.module.css';
 
 
 const TeamInfo = (props) => {
+
     return (
-        <div>
-            TEam Info Component
+        <div className={style.articleTeamHeader}>
+            <div className = {style.left}
+                style={{
+                    background: `url('/images/teams/${props.team.logo}')`
+                }}
+            >
+
+            </div>
+            <div className={style.right}>
+                <div>
+                    <span>
+                        {props.team.city}
+                        {props.team.name}
+                    </span>
+                </div>
+                <div>
+                    <strong>
+                        {/* W{props.team.stats[0].wins}-L{props.team.stats[0].defeats} */}
+                    </strong>
+                </div>
+            </div>
         </div>
     )
 }
