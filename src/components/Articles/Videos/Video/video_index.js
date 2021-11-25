@@ -4,6 +4,7 @@ import { url } from '../../../../config';
 import withRouterHOC from "../../../../hoc/withRouter/withRouter";
 
 import style from '../../articles.module.css';
+import VidHeader from "./vidHeader";
 
 class VideoArticle extends Component {
 
@@ -29,10 +30,13 @@ class VideoArticle extends Component {
     }
 
     render () {
-        console.log(this.state)
+        const article = this.state.article;
+        const team = this.state.team;
+
         return (
             <div>
-                Video Article Component
+                <VidHeader team={team} />
+                Video Body Component?
             </div>
         )
     }
