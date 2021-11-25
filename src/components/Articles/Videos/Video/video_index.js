@@ -35,7 +35,7 @@ class VideoArticle extends Component {
 
         return (
             <div>
-                <VidHeader team={team} />
+                <VidHeader teamData={team} />
                 Video Body Component?
             </div>
         )
