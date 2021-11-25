@@ -53,7 +53,7 @@ class NewsArticles extends Component {
                     >
 
                     </div>
-                    <div>
+                    <div className={style.articleText}>
                         {article.body}
                     </div>
                 </div>
