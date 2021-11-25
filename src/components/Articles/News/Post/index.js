@@ -43,8 +43,7 @@ class NewsArticles extends Component {
                     date={article.date}
                     author={article.author}
                 />
-                <NewsBody
-                />
+                <NewsBody />
             </div>
         )
     }
