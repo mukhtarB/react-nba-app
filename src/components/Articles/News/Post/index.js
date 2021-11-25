@@ -7,7 +7,6 @@ import withRouterHOC from "../../../../hoc/withRouter/withRouter";
 import style from '../../articles.module.css';
 
 import NewsHeader from "./newsHeader";
-import NewsBody from "./newsBody";
 
 class NewsArticles extends Component {
 
@@ -43,8 +42,21 @@ class NewsArticles extends Component {
                     date={article.date}
                     author={article.author}
                 />
-                <NewsBody
-                />
+                
+                <div className={style.articleBody}>
+                    <h1>{article.title}</h1>
+                    <div
+                        className={style.articleImage}
+                        style={{
+                            background: `url('/images/articles/${article.image}')`
+                        }}
+                    >
+
+                    </div>
+                    <div className={style.articleText}>
+                        {article.body}
+                    </div>
+                </div>
             </div>
         )
     }

@@ -1,7 +1,7 @@
 import React from "react";
 
 import TeamInfo from "../../Elements/teamInfo";
-import postData from "../../Elements/postData";
+import PostData from "../../Elements/postData.js";
 
 const NewsHeader = (props) => {
 
@@ -11,14 +11,14 @@ const NewsHeader = (props) => {
         ) : null;
     }
 
-    const postData = (date, author) => {
-        <PostData data={{ data, author }} />
+    const post_Data = (date, author) => {
+        return <PostData data={{ date, author }} />
     }
 
     return(
         <div>
             {teamInfo(props.teamData)}
-            {postData(props.date, props.author)}
+            {post_Data(props.date, props.author)}
         </div>
     )
 }
