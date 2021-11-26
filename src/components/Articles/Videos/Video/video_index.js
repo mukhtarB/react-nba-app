@@ -5,6 +5,7 @@ import withRouterHOC from "../../../../hoc/withRouter/withRouter";
 
 import style from '../../articles.module.css';
 import VidHeader from "./vidHeader";
+import TeamInfo from "../../Elements/teamInfo";
 
 class VideoArticle extends Component {
 
@@ -36,7 +37,17 @@ class VideoArticle extends Component {
         return (
             <div>
                 <VidHeader teamData={team} />
-                Video Body Component?
+                <div className={style.videoWrapper}>
+                    <h1>{article.title}</h1>
+                    <iframe
+                        title="videoplayer"
+                        width="100%"
+                        height="300px"
+                        src={`https://www.youtube.com/embed/${article.url}`}
+                    >
+
+                    </iframe>
+                </div>
             </div>
         )
     }
