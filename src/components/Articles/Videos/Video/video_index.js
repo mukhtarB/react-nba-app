@@ -6,12 +6,15 @@ import withRouterHOC from "../../../../hoc/withRouter/withRouter";
 import style from '../../articles.module.css';
 import VidHeader from "./vidHeader";
 import TeamInfo from "../../Elements/teamInfo";
+import VideosRelated from "../../../../widgets/VideosList/VideoRelated/videoRelated";
 
 class VideoArticle extends Component {
 
     state = {
         article:[],
-        team:[]
+        team:[],
+        teams:[],
+        related: []
     }
 
 
@@ -25,6 +28,23 @@ class VideoArticle extends Component {
                 this.setState({
                     article,
                     team: response.data
+                })
+            })
+            this.getRelated();
+        })
+    }
+
+    getRelated = () => {
+
+        axios.get(`${url}/teams`)
+        .then ( response => {
+            let teams = response.data
+
+            axios.get(`${url}/videos?q=${this.state.team.city}&_limit=3`)
+            .then( response => {
+                this.setState({
+                    teams,
+                    related: response.data
                 })
             })
         })
@@ -47,6 +67,11 @@ class VideoArticle extends Component {
                     >
 
                     </iframe>
+
+                    <VideosRelated
+                        data={this.state.related}
+                        teams={this.state.teams}
+                    />
                 </div>
             </div>
         )
