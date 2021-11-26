@@ -13,7 +13,6 @@ const VidHeader = (props) => {
     return (
         <div>
             {teamInfo(props.teamData)}
-            Video Header Component
         </div>
     )
 }
