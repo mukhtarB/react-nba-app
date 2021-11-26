@@ -1,9 +1,15 @@
 import React from "react";
 
-const VideosRelated = () => {
+import style from '../videosList.module.css'
+import VideosListTemplate from "../videosListTemplate";
+
+const VideosRelated = (props) => {
     return (
-        <div>
-            Videos Related
+        <div className={style.relatedWrapper}>
+            <VideosListTemplate
+                data={props.data}
+                teams={props.teams}
+            />
         </div>
     )
 }
