@@ -5,6 +5,7 @@ import Home from "./components/Home/home";
 import Layout from './hoc/Layout/layout';
 import NewsArticles from "./components/Articles/News/Post";
 import VideoArticle from "./components/Articles/Videos/Video/video_index";
+import NewsMain from "./components/Articles/News/Main";
 
 class Routing extends Component {
     render(){
@@ -12,6 +13,7 @@ class Routing extends Component {
             <Layout>
                 <Routes>
                     <Route path='/' exact element={<Home />} />
+                    <Route path='/news' exact element={<NewsMain />} />
                     <Route path='/articles/:id' exact element={<NewsArticles />} />
                     <Route path='/videos/:id' exact element={<VideoArticle />} />
                 </Routes>
