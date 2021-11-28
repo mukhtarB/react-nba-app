@@ -4,7 +4,12 @@ import VideoList from '../../../../widgets/VideosList/videosList';
 const VideosMain = () => {
     return (
         <div>
-            VIdeos List Component
+            <VideoList
+                type="card"
+                loadmore={true}
+                start={0}
+                amount={10}
+            />
         </div>
     )
 }
