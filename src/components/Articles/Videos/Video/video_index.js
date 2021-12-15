@@ -27,11 +27,14 @@ class VideoArticle extends Component {
             .then( snapshot => {
                 
                 const team = firebaseLooper(snapshot);
+
                 this.setState({
                     article,
                     team
                 })
             })
+
+            // this.getRelated();
         })
 
         // axios.get(`${url}/videos/${this.props.params.id}`)
@@ -52,7 +55,24 @@ class VideoArticle extends Component {
     }
 
     getRelated = () => {
-        
+        dbTeams.once('value')
+        .then( snapshot => {
+            const teams = firebaseLooper(snapshot);
+            
+            // changing the logic slighlty as firebase does not have search by query 'q'
+            dbVideos
+            .orderByChild('team')
+            .equalTo(this.state.article.team)
+            .limitToFirst(3).once('value')
+            .then( snapshot => {
+                let related = firebaseLooper(snapshot);
+
+                this.setState({
+                    teams,
+                    related
+                })
+            })
+        })
 
         // axios.get(`${url}/teams`)
         // .then ( response => {
@@ -74,7 +94,6 @@ class VideoArticle extends Component {
 
         const article = this.state.article;
         const team = this.state.team;
-        // console.log(team)
 
         return (
             <div>
