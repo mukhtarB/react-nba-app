@@ -77,7 +77,7 @@ class VideoList extends Component {
                 loadMore={() => {this.loadMore()}}
                 cta="load more videos"
             />
-            : <Button type="linkTo" cta="More videos" linkTo = "/vidoes" />
+            : <Button type="linkTo" cta="More videos" linkTo = "/videos" />
     }
 
     render () {

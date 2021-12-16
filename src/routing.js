@@ -15,7 +15,7 @@ class Routing extends Component {
                 <Routes>
                     <Route path='/' exact element={<Home />} />
                     <Route path='/news' exact element={<NewsMain />} />
-                    <Route path='/vidoes' exact element={<VideosMain />} />
+                    <Route path='/videos' exact element={<VideosMain />} />
                     <Route path='/articles/:id' exact element={<NewsArticles />} />
                     <Route path='/videos/:id' exact element={<VideoArticle />} />
                 </Routes>
