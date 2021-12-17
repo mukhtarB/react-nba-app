@@ -23,7 +23,7 @@ const TeamInfo = (props) => {
                 </div>
                 <div>
                     <strong>
-                        {/* W{props.team.stats[0].wins}-L{props.team.stats[0].defeats} */}
+                        W{props.team.stats[0].wins}-L{props.team.stats[0].defeats}
                     </strong>
                 </div>
             </div>

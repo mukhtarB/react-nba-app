@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import axios from "axios";
+import { firebaseLooper, dbTeams, dbVideos } from "../../firebase";
 
 import style from './videosList.module.css';
 
-import { url } from "../../config";
+// import { url } from "../../config";
+// import axios from "axios";
 import Button from "../Buttons/button";
 import VideosListTemplate from "./videosListTemplate";
 
@@ -23,22 +24,47 @@ class VideoList extends Component {
 
     request = (start, end) => {
         if(!this.state.teams.length) {
-            axios.get(`${url}/teams`)
-            .then( response => {
+            dbTeams.once('value')
+            .then( snapshot => {
+                let teams = firebaseLooper(snapshot);
                 this.setState({
-                    teams: response.data
+                    teams
                 })
             })
+
+
+            // axios.get(`${url}/teams`)
+            // .then( response => {
+            //     this.setState({
+            //         teams: response.data
+            //     })
+            // })
         }
 
-        axios.get(`${url}/videos?_start=${start}&_end=${end}`)
-        .then ( response => {
+        dbVideos.orderByChild("id").startAt(start).endAt(end)
+        .once('value')
+        .then( snapshot => {
+            let videos = firebaseLooper(snapshot);
+
             this.setState({
-                videos: [...this.state.videos, ...response.data],
+                videos: [...this.state.videos, ...videos],
                 start,
                 end
             })
         })
+        .catch( e => {
+            console.log(e);
+        })
+
+
+        // axios.get(`${url}/videos?_start=${start}&_end=${end}`)
+        // .then ( response => {
+        //     this.setState({
+        //         videos: [...this.state.videos, ...response.data],
+        //         start,
+        //         end
+        //     })
+        // })
     }
 
     renderTitle = () => {

@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import axios from "axios";
+import { firebaseDB, firebaseLooper, dbTeams } from "../../../../firebase";
 
-import { url } from '../../../../config';
+// import axios from "axios";
+// import { url } from '../../../../config';
 import withRouterHOC from "../../../../hoc/withRouter/withRouter";
 
 import style from '../../articles.module.css';
@@ -16,18 +17,34 @@ class NewsArticles extends Component {
     }
 
     UNSAFE_componentWillMount () {
-        axios.get(`${url}/articles/${this.props.params.id}`)
-        .then( response => {
-            let article = response.data;
+        firebaseDB.ref(`articles/${this.props.params.id}`).once('value')
+        .then( snapshot => {
+            let article = snapshot.val();
 
-            axios.get(`${url}/teams/${article.team}`)
-            .then( response => {
+            dbTeams.orderByChild("teamId").equalTo(article.team).once('value')
+            .then( snapshot => {
+                
+                const team = firebaseLooper(snapshot);
                 this.setState({
                     article,
-                    team: response.data
+                    team
                 })
             })
         })
+
+
+        // axios.get(`${url}/articles/${this.props.params.id}`)
+        // .then( response => {
+        //     let article = response.data;
+
+        //     axios.get(`${url}/teams/${article.team}`)
+        //     .then( response => {
+        //         this.setState({
+        //             article,
+        //             team: response.data
+        //         })
+        //     })
+        // })
     }
 
     render () {
@@ -38,7 +55,7 @@ class NewsArticles extends Component {
         return (
             <div className = {style.articleWrapper}>
                 <NewsHeader
-                    teamData={team}
+                    teamData={team[0]}
                     date={article.date}
                     author={article.author}
                 />
