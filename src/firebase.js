@@ -23,7 +23,7 @@ const firebaseLooper = (snapshot) => {
     const data = []
 
     snapshot.forEach(childSnapshot => {
-        console.log(childSnapshot.val())
+        // console.log(childSnapshot.val())
         data.push({
             ...childSnapshot.val(),
             id: childSnapshot.key
