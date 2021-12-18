@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import axios from "axios";
-import { url } from '../../../../config';
+// import axios from "axios";
+// import { url } from '../../../../config';
+import { firebaseLooper, dbTeams, firebaseDB, dbVideos } from "../../../../firebase";
 import withRouterHOC from "../../../../hoc/withRouter/withRouter";
 
 import style from '../../articles.module.css';
@@ -18,39 +19,74 @@ class VideoArticle extends Component {
 
 
     UNSAFE_componentWillMount () {
+        firebaseDB.ref(`videos/${this.props.params.id}`).once('value')
+        .then( snapshot => {
+            let article = snapshot.val();
 
-        axios.get(`${url}/videos/${this.props.params.id}`)
-        .then( response => {
-            let article = response.data;
+            dbTeams.orderByChild("teamId").equalTo(article.team).once('value')
+            .then( snapshot => {
+                
+                const team = firebaseLooper(snapshot);
 
-            axios.get(`${url}/teams/${article.team}`)
-            .then( response => {
                 this.setState({
                     article,
-                    team: response.data
+                    team
                 })
             })
 
-            this.getRelated();
+            // this.getRelated();
         })
+
+        // axios.get(`${url}/videos/${this.props.params.id}`)
+        // .then( response => {
+        //     let article = response.data;
+
+        //     axios.get(`${url}/teams/${article.team}`)
+        //     .then( response => {
+        //         this.setState({
+        //             article,
+        //             team: response.data
+        //         })
+        //     })
+
+        //     this.getRelated();
+        // })
 
     }
 
     getRelated = () => {
+        dbTeams.once('value')
+        .then( snapshot => {
+            const teams = firebaseLooper(snapshot);
+            
+            // changing the logic slighlty as firebase does not have search by query 'q'
+            dbVideos
+            .orderByChild('team')
+            .equalTo(this.state.article.team)
+            .limitToFirst(3).once('value')
+            .then( snapshot => {
+                let related = firebaseLooper(snapshot);
 
-        axios.get(`${url}/teams`)
-        .then ( response => {
-            let teams = response.data
-
-            axios.get(`${url}/videos?q=${this.state.team.city}&_limit=3`)
-            .then( response => {
                 this.setState({
                     teams,
-                    related: response.data
+                    related
                 })
             })
-            
         })
+
+        // axios.get(`${url}/teams`)
+        // .then ( response => {
+        //     let teams = response.data
+
+        //     axios.get(`${url}/videos?q=${this.state.team.city}&_limit=3`)
+        //     .then( response => {
+        //         this.setState({
+        //             teams,
+        //             related: response.data
+        //         })
+        //     })
+            
+        // })
 
     }
 
@@ -61,7 +97,7 @@ class VideoArticle extends Component {
 
         return (
             <div>
-                <VidHeader teamData={team} />
+                <VidHeader teamData={team[0]} />
 
                 <div className={style.videoWrapper}>
                     <h1>{article.title}</h1>
