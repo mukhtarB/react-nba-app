@@ -48,8 +48,7 @@ class SignIn extends Component {
     }
 
     updateFormWith = (element) => {
-        console.log(element)
-
+        
         const newFormData = {
             ...this.state.formData
         }
@@ -71,6 +70,7 @@ class SignIn extends Component {
         return (
             <div className={style.logContainer}>
                 <form>
+                    <h2>Register / Log In</h2>
                     <FormField
                         id={'email'}
                         formFieldData = {this.state.formData.email}
