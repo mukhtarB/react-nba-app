@@ -71,6 +71,7 @@ class NewsList extends Component {
     }
 
     loadMore = () => {
+        // added +1 here - newsList
         let start = this.state.end + 1;
         let end = this.state.end + this.state.amount;
 
