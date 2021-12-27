@@ -7,6 +7,7 @@ import NewsArticles from "./components/Articles/News/Post";
 import VideoArticle from "./components/Articles/Videos/Video/video_index";
 import NewsMain from "./components/Articles/News/Main";
 import VideosMain from "./components/Articles/Videos/Main";
+import SignIn from "./components/signIn/signIn";
 
 class Routing extends Component {
     render(){
@@ -18,6 +19,7 @@ class Routing extends Component {
                     <Route path='/videos' exact element={<VideosMain />} />
                     <Route path='/articles/:id' exact element={<NewsArticles />} />
                     <Route path='/videos/:id' exact element={<VideoArticle />} />
+                    <Route path='/sign-in' exact element={<SignIn />} />
                 </Routes>
             </Layout>
         )
