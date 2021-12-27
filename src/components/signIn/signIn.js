@@ -3,6 +3,9 @@ import { Component } from "react/cjs/react.production.min";
 
 import style from './signIn.module.css';
 
+// components
+import FormField from "../../widgets/FormFields/formFields";
+
 class SignIn extends Component {
 
     state = {
@@ -46,8 +49,10 @@ class SignIn extends Component {
 
     render () {
         return (
-            <div>
-                Sign In Page.
+            <div className={style.logContainer}>
+                <form>
+                    <FormField/>
+                </form>
             </div>
         )
     }
