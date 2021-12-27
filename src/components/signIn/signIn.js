@@ -65,7 +65,7 @@ class SignIn extends Component {
             newElement.valid = validData[0];
             newElement.validationMessage = validData[1];
         }
-        
+
         newElement.touched = element.blur;
         newFormData[element.id] = newElement;
 

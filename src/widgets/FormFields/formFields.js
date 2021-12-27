@@ -3,18 +3,36 @@ import style from './formFields.module.css';
 
 const FormFields = ({id, formFieldData, change}) => {
 
+    const showError = () => {
+        let errorMessage;
+
+        if (formFieldData.validation && !formFieldData.valid) {
+            errorMessage = (
+                <div className = {style.labelError}>
+                    {formFieldData.validationMessage}
+                </div>
+            )
+        }
+
+
+        return errorMessage;
+    }
+
     const renderTemplate = () => {
         let formTemplate;
 
         switch (formFieldData.element) {
             case 'input':
                 formTemplate = (
-                    <input
-                        {...formFieldData.config}
-                        value={formFieldData.value}
-                        onBlur={(event) => change({event, id, blur:true})}
-                        onChange={(event) => change({event, id, blur:false})}
-                    />
+                    <>
+                        <input
+                            {...formFieldData.config}
+                            value={formFieldData.value}
+                            onBlur={(event) => change({event, id, blur:true})}
+                            onChange={(event) => change({event, id, blur:false})}
+                        />
+                        { showError() }
+                    </>
                 )
                 break;
         
