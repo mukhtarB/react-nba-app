@@ -32,11 +32,12 @@ class VideoArticle extends Component {
                     article,
                     team
                 })
+                
+                this.getRelated();
             })
-
-            // this.getRelated();
         })
 
+        
         // axios.get(`${url}/videos/${this.props.params.id}`)
         // .then( response => {
         //     let article = response.data;
