@@ -9,7 +9,12 @@ const FormFields = ({id, formFieldData, change}) => {
         switch (formFieldData.element) {
             case 'input':
                 formTemplate = (
-                    <div>INPUT JSX</div>
+                    <input
+                        {...formFieldData.config}
+                        value={formFieldData.value}
+                        onChange={(event) => change({event,id,blur:true})}
+                        onChange={(event) => change({event,id,blur:false})}
+                    />
                 )
                 break;
         
