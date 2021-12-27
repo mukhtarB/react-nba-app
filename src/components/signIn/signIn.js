@@ -76,6 +76,12 @@ class SignIn extends Component {
                         formFieldData = {this.state.formData.email}
                         change = {(newState) => this.updateFormWith (newState)}
                     />
+                  
+                    <FormField
+                        id={'password'}
+                        formFieldData = {this.state.formData.password}
+                        change = {(newState) => this.updateFormWith (newState)}
+                    />
                 </form>
             </div>
         )
