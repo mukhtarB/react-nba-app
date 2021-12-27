@@ -38,7 +38,7 @@ class SignIn extends Component {
                 },
                 validation: {
                     required: true,
-                    email_rule: true
+                    password_rule: true
                 },
                 valid: false,
                 touched: false,
@@ -61,9 +61,12 @@ class SignIn extends Component {
         if (element.blur) {
             let validData = this.validate(newElement)
 
-            console.log(validData);
+            // updating the formdata input field with it's validation info
+            newElement.valid = validData[0];
+            newElement.validationMessage = validData[1];
         }
-
+        
+        newElement.touched = element.blur;
         newFormData[element.id] = newElement;
 
         // console.log(newFormData);
@@ -75,9 +78,26 @@ class SignIn extends Component {
     validate = (element) => {
         let error = [true, ''];
 
+        // email validation
+        if (element.validation.email_rule) {
+            const valid = /\S+@\S+\.\S+/.test(element.value);
+            const message = `${!valid ? 'This is not a valid email!' : ''}`;
+
+            error = !valid ? [valid, message] : error
+        }
+
+        // password validation
+        if (element.validation.password_rule) {
+            const valid = element.value.length >= 5;
+            const message = `${!valid ? 'Password cannot be less than 5!' : ''}`;
+
+            error = !valid ? [valid, message] : error
+        }
+
+        // required validation
         if (element.validation.required) {
             const valid = element.value.trim() !== '';
-            const message = `${!valid ? 'This field is required' : ''}`;
+            const message = `${!valid ? 'This field is required!' : ''}`;
 
             error = !valid ? [valid, message] : error
         }
