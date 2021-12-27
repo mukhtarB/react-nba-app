@@ -12,8 +12,8 @@ const FormFields = ({id, formFieldData, change}) => {
                     <input
                         {...formFieldData.config}
                         value={formFieldData.value}
-                        onChange={(event) => change({event,id,blur:true})}
-                        onChange={(event) => change({event,id,blur:false})}
+                        onBlur={(event) => change({event, id, blur:true})}
+                        onChange={(event) => change({event, id, blur:false})}
                     />
                 )
                 break;
