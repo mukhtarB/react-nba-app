@@ -105,6 +105,27 @@ class SignIn extends Component {
         return error;
     }
 
+    submitForm = (event, type) => {
+        event.preventDefault();
+
+        if (type !== null) {
+            let dataToSubmit = {};
+            let formIsValid = true;
+
+            for (let key in this.state.formData) {
+                dataToSubmit[key] = this.state.formData[key].value;
+            }
+
+            for (let key in this.state.formData) {
+                formIsValid = this.state.formData[key].valid && formIsValid;
+            }
+
+            if (formIsValid) {
+                console.log(dataToSubmit);
+            }
+        }
+    }
+
     submitButton = () => (
         this.state.loading ? 
             'loading...'
