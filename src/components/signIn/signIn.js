@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Navigate } from 'react-router';
+import { Navigate } from 'react-router-dom';
 
 import style from './signIn.module.css';
 import { firebase } from "../../firebase";
@@ -130,9 +130,25 @@ class SignIn extends Component {
                 })
 
                 if (type) {
-                    console.log('LOG IN')
+                    // LOG IN
+                    firebase.auth()
+                    .signInWithEmailAndPassword(
+                        dataToSubmit.email,
+                        dataToSubmit.password
+                    )
+                    .then( () => {
+                        // this.props.history.push('/');
+                        <Navigate to="/" replace />
+                    })
+                    .catch( (error) => {
+                        this.setState({
+                            loading: true,
+                            registerError: error.message
+                        })
+                        console.log("Error ->", this.state.registerError)
+                    })
                 } else {
-                    // console.log('REGISTER')
+                    // REGISTER
                     firebase.auth()
                     .createUserWithEmailAndPassword(
                         dataToSubmit.email,
