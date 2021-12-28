@@ -105,10 +105,20 @@ class SignIn extends Component {
         return error;
     }
 
+    submitButton = () => (
+        this.state.loading ? 
+            'loading...'
+        :
+            <div>
+                <button onClick={(event) => this.submitForm(event, false)}>Register Now</button>
+                <button onClick={(event) => this.submitForm(event, true)}>Log In</button>
+            </div>
+    )
+
     render () {
         return (
             <div className={style.logContainer}>
-                <form>
+                <form onSubmit={(event) => this.submitForm(event, null)}>
                     <h2>Register / Log In</h2>
                     <FormField
                         id={'email'}
@@ -121,6 +131,8 @@ class SignIn extends Component {
                         formFieldData = {this.state.formData.password}
                         change = {(newState) => this.updateFormWith (newState)}
                     />
+
+                    {this.submitButton()}
                 </form>
             </div>
         )
