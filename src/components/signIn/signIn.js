@@ -121,7 +121,17 @@ class SignIn extends Component {
             }
 
             if (formIsValid) {
-                console.log(dataToSubmit);
+                // console.log(dataToSubmit);
+                this.setState({
+                    loading: true,
+                    registerError: ''
+                })
+
+                if (type) {
+                    console.log('LOG IN')
+                } else {
+                    console.log('Register')
+                }
             }
         }
     }
