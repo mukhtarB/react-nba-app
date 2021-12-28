@@ -1,10 +1,12 @@
-import React from "react";
-import { Component } from "react/cjs/react.production.min";
+import React, { Component } from "react";
+import { Navigate } from 'react-router';
 
 import style from './signIn.module.css';
+import { firebase } from "../../firebase";
 
 // components
 import FormField from "../../widgets/FormFields/formFields";
+
 
 class SignIn extends Component {
 
@@ -130,12 +132,29 @@ class SignIn extends Component {
                 if (type) {
                     console.log('LOG IN')
                 } else {
-                    console.log('Register')
+                    // console.log('REGISTER')
+                    firebase.auth()
+                    .createUserWithEmailAndPassword(
+                        dataToSubmit.email,
+                        dataToSubmit.password
+                    )
+                    .then( () => {
+                        // this.props.history.push('/');
+                        <Navigate to="/" replace />
+                        console.log("Success")
+                    })
+                    .catch( (error) => {
+                        this.setState({
+                            loading: true,
+                            registerError: error.message
+                        })
+                        console.log("Error ->", this.state.registerError)
+                    })
+                    
                 }
             }
         }
     }
-
     submitButton = () => (
         this.state.loading ? 
             'loading...'
