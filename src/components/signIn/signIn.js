@@ -171,6 +171,7 @@ class SignIn extends Component {
             }
         }
     }
+
     submitButton = () => (
         this.state.loading ? 
             'loading...'
@@ -179,6 +180,15 @@ class SignIn extends Component {
                 <button onClick={(event) => this.submitForm(event, false)}>Register Now</button>
                 <button onClick={(event) => this.submitForm(event, true)}>Log In</button>
             </div>
+    )
+
+    showError = () => (
+        this.state.registerError !== '' ? 
+            <div className={style.error}>
+                {this.state.registerError}
+            </div>
+        :
+            ''
     )
 
     render () {
@@ -198,7 +208,9 @@ class SignIn extends Component {
                         change = {(newState) => this.updateFormWith (newState)}
                     />
 
+                    {this.showError()}
                     {this.submitButton()}
+                    
                 </form>
             </div>
         )
