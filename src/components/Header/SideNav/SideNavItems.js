@@ -12,44 +12,60 @@ const SideNavItems = () => {
             type: style.option,
             icon: 'home',
             text: 'Home',
-            link: '/'
+            link: '/',
+            login: ''
         },
         {
             type: style.option,
             icon: 'file-text',
             text: 'News',
-            link: '/news'
+            link: '/news',
+            login: ''
         },
         {
             type: style.option,
             icon: 'play',
             text: 'Videos',
-            link: '/videos'
+            link: '/videos',
+            login: ''
         },
         {
             type: style.option,
             icon: 'sign-in-alt',
             text: 'Sign In',
-            link: '/sign-in'
+            link: '/sign-in',
+            login: true
         },
         {
             type: style.option,
             icon: 'sign-out-alt',
             text: 'Sign Out',
-            link: '/sign-out'
+            link: '/sign-out',
+            login: false
         },
     ]
 
+    const element = (item, i) => {
+        return(
+            <div className={item.type} key={i}>
+                <Link to={item.link}>
+                    <FontAwesome name={item.icon} />
+                    {item.text}
+                </Link>
+            </div>
+        )
+    }
+
+    const restrictedElements = () => {
+        
+    }
+
     const showItems = () => {
         return items.map((item, i) => {
-            return (
-                <div className={item.type} key={i}>
-                    <Link to={item.link}>
-                        <FontAwesome name={item.icon} />
-                        {item.text}
-                    </Link>
-                </div>
-            )
+            return item.login !== '' ?
+                restrictedElements(item, i)
+            :
+                element(item, i)
         })
     }
 
