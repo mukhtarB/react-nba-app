@@ -5,7 +5,7 @@ import style from './sideNav.module.css';
 import FontAwesome from "react-fontawesome";
 
 
-const SideNavItems = () => {
+const SideNavItems = (props) => {
 
     const items = [
         {
@@ -28,6 +28,13 @@ const SideNavItems = () => {
             text: 'Videos',
             link: '/videos',
             login: ''
+        },
+        {
+            type: style.option,
+            icon: 'sign-in-alt',
+            text: 'Dashboard',
+            link: '/dashboard',
+            login: false
         },
         {
             type: style.option,
@@ -56,8 +63,28 @@ const SideNavItems = () => {
         )
     }
 
-    const restrictedElements = () => {
-        
+    // render signin or sign out on sideNav based on user info
+    const restrictedElements = (item, i) => {
+        let template;
+
+        if (props.user === null && item.login) {
+            template = element(item, i)
+        }
+
+        if (props.user !== null && !item.login) {
+            if (item.link === '/sign-out') {
+                template = (
+                    <div className={item.type} key={i}>
+                        <FontAwesome name={item.icon} />
+                        {item.text}
+                    </div>
+                )
+            } else {
+                template = element(item, i)
+            }
+        }
+
+        return template;
     }
 
     const showItems = () => {
