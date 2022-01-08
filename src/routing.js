@@ -9,9 +9,9 @@ import NewsMain from "./components/Articles/News/Main";
 import VideosMain from "./components/Articles/Videos/Main";
 import SignIn from "./components/signIn/signIn";
 
-const Routing = () => {
+const Routing = (props) => {
     return(
-        <Layout>
+        <Layout user={props.user}>
             <Routes>
                 <Route path='/' exact element={<Home />} />
                 <Route path='/news' exact element={<NewsMain />} />
