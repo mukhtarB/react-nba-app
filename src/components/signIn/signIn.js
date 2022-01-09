@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-import { Navigate } from 'react-router-dom';
 
 import style from './signIn.module.css';
 import { firebase } from "../../firebase";
+import withRouterHOC from "../../hoc/withRouter/withRouter";
 
 // components
 import FormField from "../../widgets/FormFields/formFields";
+
 
 
 class SignIn extends Component {
@@ -137,8 +138,7 @@ class SignIn extends Component {
                         dataToSubmit.password
                     )
                     .then( () => {
-                        // this.props.history.push('/');
-                        <Navigate to="/" replace />
+                        this.props.navigate('/')
                     })
                     .catch( (error) => {
                         this.setState({
@@ -155,9 +155,7 @@ class SignIn extends Component {
                         dataToSubmit.password
                     )
                     .then( () => {
-                        // this.props.history.push('/');
-                        <Navigate to="/" replace />
-                        console.log("Success")
+                        this.props.navigate('/')
                     })
                     .catch( (error) => {
                         this.setState({
@@ -217,4 +215,4 @@ class SignIn extends Component {
     }
 }
 
-export default SignIn;
+export default withRouterHOC(SignIn);
