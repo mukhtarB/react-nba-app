@@ -138,6 +138,12 @@ class Dashboard extends Component {
                         formFieldData = {this.state.formData.author}
                         change = {(newState) => this.updateFormWith(newState)}
                     />
+                    
+                    <FormField
+                        id={'title'}
+                        formFieldData = {this.state.formData.title}
+                        change = {(newState) => this.updateFormWith(newState)}
+                    />
 
                     {this.submitButton()}
                     {this.showError()}
