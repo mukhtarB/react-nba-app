@@ -97,7 +97,7 @@ class Dashboard extends Component {
             formIsValid = this.state.formData[key].valid && formIsValid;
         }
 
-        console.log(dataToSubmit);
+        console.log(dataToSubmit, formIsValid);
 
         if (formIsValid) {
             console.log("submitted post")
@@ -118,6 +118,15 @@ class Dashboard extends Component {
             </div>
     )
 
+    showError = () => (
+        this.state.postError !== '' ? 
+            <div className={style.error}>
+                {this.state.postError}
+            </div>
+        :
+            ''
+    )
+
     render () {
         return(
             <div className={style.postContainer}>
@@ -131,6 +140,7 @@ class Dashboard extends Component {
                     />
 
                     {this.submitButton()}
+                    {this.showError()}
 
                 </form>
             </div>
