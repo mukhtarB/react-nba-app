@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { Routes, Route } from 'react-router-dom';
 
 import Home from "./components/Home/home";
@@ -9,21 +9,19 @@ import NewsMain from "./components/Articles/News/Main";
 import VideosMain from "./components/Articles/Videos/Main";
 import SignIn from "./components/signIn/signIn";
 
-class Routing extends Component {
-    render(){
-        return(
-            <Layout>
-                <Routes>
-                    <Route path='/' exact element={<Home />} />
-                    <Route path='/news' exact element={<NewsMain />} />
-                    <Route path='/videos' exact element={<VideosMain />} />
-                    <Route path='/articles/:id' exact element={<NewsArticles />} />
-                    <Route path='/videos/:id' exact element={<VideoArticle />} />
-                    <Route path='/sign-in' exact element={<SignIn />} />
-                </Routes>
-            </Layout>
-        )
-    }
+const Routing = (props) => {
+    return(
+        <Layout user={props.user}>
+            <Routes>
+                <Route path='/' exact element={<Home />} />
+                <Route path='/news' exact element={<NewsMain />} />
+                <Route path='/videos' exact element={<VideosMain />} />
+                <Route path='/articles/:id' exact element={<NewsArticles />} />
+                <Route path='/videos/:id' exact element={<VideoArticle />} />
+                <Route path='/sign-in' exact element={<SignIn />} />
+            </Routes>
+        </Layout>
+    )
 }
 
 export default Routing;
