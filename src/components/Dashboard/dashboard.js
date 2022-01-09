@@ -83,8 +83,34 @@ class Dashboard extends Component {
         return error;
     }
 
+    submitForm = (event) => {
+        event.preventDefault();
+
+        let dataToSubmit = {};
+        let formIsValid = true;
+
+        for (let key in this.state.formData) {
+            dataToSubmit[key] = this.state.formData[key].value;
+        }
+
+        for (let key in this.state.formData) {
+            formIsValid = this.state.formData[key].valid && formIsValid;
+        }
+
+        console.log(dataToSubmit);
+
+        if (formIsValid) {
+            console.log("submitted post")
+        } else {
+            this.setState({
+                postError: 'Something went wrong!'
+            })
+        }
+
+    }
+
     submitButton = () => (
-        this.state.loading ? 
+        this.state.loading ?
             'loading...'
         :
             <div>
