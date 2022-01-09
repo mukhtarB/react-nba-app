@@ -71,7 +71,7 @@ class Dashboard extends Component {
 
     validate = (element) => {
         let error = [true, ''];
-        
+
         // required validation
         if (element.validation.required) {
             const valid = element.value.trim() !== '';
@@ -82,6 +82,15 @@ class Dashboard extends Component {
 
         return error;
     }
+
+    submitButton = () => (
+        this.state.loading ? 
+            'loading...'
+        :
+            <div>
+                <button type="submit">Add Post</button>
+            </div>
+    )
 
     render () {
         return(
@@ -94,6 +103,8 @@ class Dashboard extends Component {
                         formFieldData = {this.state.formData.author}
                         change = {(newState) => this.updateFormWith(newState)}
                     />
+
+                    {this.submitButton()}
 
                 </form>
             </div>
