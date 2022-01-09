@@ -3,10 +3,12 @@ import { Link } from 'react-router-dom';
 
 import style from './sideNav.module.css';
 import FontAwesome from "react-fontawesome";
+import { firebase } from "../../../firebase";
+import withRouterHOC from "../../../hoc/withRouter/withRouter";
 
 
 const SideNavItems = (props) => {
-
+    
     const items = [
         {
             type: style.option,
@@ -74,7 +76,15 @@ const SideNavItems = (props) => {
         if (props.user !== null && !item.login) {
             if (item.link === '/sign-out') {
                 template = (
-                    <div className={item.type} key={i}>
+                    <div className={item.type}
+                    key={i}
+                    onClick={() => {
+                        firebase.auth().signOut()
+                        .then(() => {
+                            props.navigate('/')
+                        })
+                    }}
+                    >
                         <FontAwesome name={item.icon} />
                         {item.text}
                     </div>
@@ -103,4 +113,4 @@ const SideNavItems = (props) => {
     )
 }
 
-export default SideNavItems;
+export default withRouterHOC(SideNavItems);
