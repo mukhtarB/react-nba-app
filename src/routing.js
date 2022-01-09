@@ -8,6 +8,7 @@ import VideoArticle from "./components/Articles/Videos/Video/video_index";
 import NewsMain from "./components/Articles/News/Main";
 import VideosMain from "./components/Articles/Videos/Main";
 import SignIn from "./components/signIn/signIn";
+import Dashboard from "./components/Dashboard/dashboard";
 
 const Routing = (props) => {
     return(
@@ -19,6 +20,7 @@ const Routing = (props) => {
                 <Route path='/articles/:id' exact element={<NewsArticles />} />
                 <Route path='/videos/:id' exact element={<VideoArticle />} />
                 <Route path='/sign-in' exact element={<SignIn />} />
+                <Route path='/dashboard' exact element={<Dashboard />} />
             </Routes>
         </Layout>
     )

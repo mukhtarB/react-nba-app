@@ -145,7 +145,7 @@ class SignIn extends Component {
                             loading: true,
                             registerError: error.message
                         })
-                        console.log("Error ->", this.state.registerError)
+                        // console.log("Error ->", this.state.registerError)
                     })
                 } else {
                     // REGISTER
@@ -162,7 +162,7 @@ class SignIn extends Component {
                             loading: true,
                             registerError: error.message
                         })
-                        console.log("Error ->", this.state.registerError)
+                        // console.log("Error ->", this.state.registerError)
                     })
                     
                 }
