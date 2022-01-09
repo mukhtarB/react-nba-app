@@ -42,8 +42,45 @@ class Dashboard extends Component {
         }
     }
 
-    updateFormWith = (newState) => {
+    updateFormWith = (element) => {
         
+        const newFormData = {
+            ...this.state.formData
+        }
+
+        const newElement = {
+            ...newFormData[element.id]
+        }
+        newElement.value = element.event.target.value;
+
+        if (element.blur) {
+            let validData = this.validate(newElement)
+
+            // updating the formdata input field with it's validation info
+            newElement.valid = validData[0];
+            newElement.validationMessage = validData[1];
+        }
+
+        newElement.touched = element.blur;
+        newFormData[element.id] = newElement;
+
+        this.setState({
+            formData: newFormData
+        })
+    }
+
+    validate = (element) => {
+        let error = [true, ''];
+        
+        // required validation
+        if (element.validation.required) {
+            const valid = element.value.trim() !== '';
+            const message = `${!valid ? 'This field is required!' : ''}`;
+
+            error = !valid ? [valid, message] : error
+        }
+
+        return error;
     }
 
     render () {
