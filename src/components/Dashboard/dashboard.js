@@ -50,7 +50,7 @@ class Dashboard extends Component {
                 value: '',
                 valid: true
             },
-            team: {
+            teams: {
                 element: 'select',
                 value: '',
                 config: {

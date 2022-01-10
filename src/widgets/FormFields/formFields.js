@@ -35,6 +35,21 @@ const FormFields = ({id, formFieldData, change}) => {
                     </>
                 )
                 break;
+            
+            case 'select':
+                formTemplate = (
+                    <>
+                        <select
+                            value={formFieldData.value}
+                            name={formFieldData.config.name}
+                            onBlur={(event) => change({event, id, blur:true})}
+                            onChange={(event) => change({event, id, blur:false})}
+                        >
+                            
+                        </select>
+                    </>
+                )
+                break;
         
             default:
                 formTemplate = null;
