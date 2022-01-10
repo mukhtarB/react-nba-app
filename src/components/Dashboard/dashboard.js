@@ -132,6 +132,13 @@ class Dashboard extends Component {
             ''
     )
 
+    // functionality of editor using state as a controlled form
+    onEditorStateChange = (editorState) => {
+        this.setState({
+            editorState
+        })
+    }
+
     render () {
         return(
             <div className={style.postContainer}>
