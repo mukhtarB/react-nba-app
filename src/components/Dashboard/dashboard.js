@@ -3,9 +3,14 @@ import React, { Component } from "react";
 import style from './dashboard.module.css'
 import FormField from "../../widgets/FormFields/formFields";
 
+import { Editor } from 'react-draft-wysiwyg';
+import { EditorState, convertFromRaw, convertToRaw } from 'draft-js';
+import { stateToHTML } from 'draft-js-export-html';
+
 class Dashboard extends Component {
 
     state = {
+        editorState: EditorState.createEmpty(),
         postError: '',
         loading: false,
         formData: {
@@ -39,10 +44,15 @@ class Dashboard extends Component {
                 touched: false,
                 validationMessage: '',
             },
+            body: {
+                element: 'testeditor',
+                value: '',
+                valid: true
+            }
         }
     }
 
-    updateFormWith = (element) => {
+    updateFormWith = (element, content=null) => {
         
         const newFormData = {
             ...this.state.formData
@@ -51,7 +61,12 @@ class Dashboard extends Component {
         const newElement = {
             ...newFormData[element.id]
         }
-        newElement.value = element.event.target.value;
+
+        if (content){
+            newElement.value = content;
+        } else {
+            newElement.value = element.event.target.value;
+        }
 
         if (element.blur) {
             let validData = this.validate(newElement)
@@ -127,6 +142,21 @@ class Dashboard extends Component {
             ''
     )
 
+    // functionality of editor using state as a controlled form
+    onEditorStateChange = (editorState) => {
+
+        let contentState = editorState.getCurrentContent();
+        // let rawState = convertToRaw(contentState);
+
+        let html = stateToHTML(contentState)
+        
+        this.updateFormWith({id: 'body'}, html)
+
+        this.setState({
+            editorState
+        })
+    }
+
     render () {
         return(
             <div className={style.postContainer}>
@@ -143,6 +173,13 @@ class Dashboard extends Component {
                         id={'title'}
                         formFieldData = {this.state.formData.title}
                         change = {(newState) => this.updateFormWith(newState)}
+                    />
+
+                    <Editor
+                        editorState={this.state.editorState}
+                        wrapperClassName="myEditor-wrapper"
+                        editorClassName="myEditor-editor"
+                        onEditorStateChange={this.onEditorStateChange}
                     />
 
                     {this.submitButton()}
