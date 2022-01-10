@@ -67,6 +67,41 @@ class Dashboard extends Component {
         }
     }
 
+    componentDidMount () {
+        this.loadTeams()
+    }
+    
+    loadTeams = () => {
+        dbTeams.once('value')
+        .then((snapshot) => {
+            let teams = [];
+
+            snapshot.forEach( childSnapshot => {
+                teams.push({
+                    id: childSnapshot.val().teamId,
+                    name: childSnapshot.val().city
+                })
+            });
+            // console.log(teams)
+
+            // make a copy of current state
+            // update the copy with new info
+            // update state with identical but updated copy
+            
+            const newFormData = {...this.state.formData};
+            const newTeamsElement = {...newFormData['teams']}
+
+            newTeamsElement.config.options = teams;
+            newFormData['teams'] = newTeamsElement;
+
+            // console.log('newFormData', newFormData)
+
+            this.setState({
+                formData: newFormData
+            })
+        })
+    }
+
     updateFormWith = (element, content=null) => {
         
         const newFormData = {
