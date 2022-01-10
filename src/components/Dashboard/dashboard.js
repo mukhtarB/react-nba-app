@@ -134,6 +134,13 @@ class Dashboard extends Component {
 
     // functionality of editor using state as a controlled form
     onEditorStateChange = (editorState) => {
+
+        let contentState = editorState.getCurrentContent();
+        // let rawState = convertToRaw(contentState);
+
+        let html = stateToHTML(contentState)
+        // console.log(html)
+
         this.setState({
             editorState
         })
