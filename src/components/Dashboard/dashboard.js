@@ -44,10 +44,15 @@ class Dashboard extends Component {
                 touched: false,
                 validationMessage: '',
             },
+            body: {
+                element: 'testeditor',
+                value: '',
+                valid: true
+            }
         }
     }
 
-    updateFormWith = (element) => {
+    updateFormWith = (element, content=null) => {
         
         const newFormData = {
             ...this.state.formData
@@ -56,7 +61,12 @@ class Dashboard extends Component {
         const newElement = {
             ...newFormData[element.id]
         }
-        newElement.value = element.event.target.value;
+
+        if (content){
+            newElement.value = content;
+        } else {
+            newElement.value = element.event.target.value;
+        }
 
         if (element.blur) {
             let validData = this.validate(newElement)
@@ -139,7 +149,8 @@ class Dashboard extends Component {
         // let rawState = convertToRaw(contentState);
 
         let html = stateToHTML(contentState)
-        // console.log(html)
+        
+        this.updateFormWith({id: 'body'}, html)
 
         this.setState({
             editorState
