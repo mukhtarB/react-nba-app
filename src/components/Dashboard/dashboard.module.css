@@ -27,3 +27,10 @@
 	color: #fff;
 	margin-top: 10px;
 }
+
+.postContainer select {
+	margin-top: 10px;
+	border: 1px solid gray;
+	padding: 5px;
+	border-radius: 3px;
+}

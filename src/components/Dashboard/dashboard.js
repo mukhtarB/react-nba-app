@@ -4,8 +4,9 @@ import style from './dashboard.module.css'
 import FormField from "../../widgets/FormFields/formFields";
 
 import { Editor } from 'react-draft-wysiwyg';
-import { EditorState, convertFromRaw, convertToRaw } from 'draft-js';
+import { EditorState } from 'draft-js';
 import { stateToHTML } from 'draft-js-export-html';
+import { dbTeams } from "../../firebase";
 
 class Dashboard extends Component {
 
@@ -48,8 +49,57 @@ class Dashboard extends Component {
                 element: 'testeditor',
                 value: '',
                 valid: true
+            },
+            teams: {
+                element: 'select',
+                value: '',
+                config: {
+                    name: 'teams_input',
+                    options: []
+                },
+                validation: {
+                    required: true,
+                },
+                valid: false,
+                touched: false,
+                validationMessage: '',
             }
         }
+    }
+
+    componentDidMount () {
+        this.loadTeams()
+    }
+    
+    loadTeams = () => {
+        dbTeams.once('value')
+        .then((snapshot) => {
+            let teams = [];
+
+            snapshot.forEach( childSnapshot => {
+                teams.push({
+                    id: childSnapshot.val().teamId,
+                    name: childSnapshot.val().city
+                })
+            });
+            // console.log(teams)
+
+            // make a copy of current state
+            // update the copy with new info
+            // update state with identical but updated copy
+            
+            const newFormData = {...this.state.formData};
+            const newTeamsElement = {...newFormData['teams']}
+
+            newTeamsElement.config.options = teams;
+            newFormData['teams'] = newTeamsElement;
+
+            // console.log('newFormData', newFormData)
+
+            this.setState({
+                formData: newFormData
+            })
+        })
     }
 
     updateFormWith = (element, content=null) => {
@@ -112,9 +162,11 @@ class Dashboard extends Component {
             formIsValid = this.state.formData[key].valid && formIsValid;
         }
 
+        //
         console.log(dataToSubmit, formIsValid);
 
         if (formIsValid) {
+            //
             console.log("submitted post")
         } else {
             this.setState({
@@ -180,6 +232,12 @@ class Dashboard extends Component {
                         wrapperClassName="myEditor-wrapper"
                         editorClassName="myEditor-editor"
                         onEditorStateChange={this.onEditorStateChange}
+                    />
+
+                    <FormField
+                        id={'teams'}
+                        formFieldData = {this.state.formData.teams}
+                        change = {(newState) => this.updateFormWith(newState)}
                     />
 
                     {this.submitButton()}
