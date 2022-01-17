@@ -4,9 +4,11 @@ import { firebase } from '../../firebase';
 class Uploader extends Component {
 
     render () {
-        <div>
-            File Uploader
-        </div>
+        return (
+            <div>
+                File Uploader
+            </div>
+        )
     }
 }
 
