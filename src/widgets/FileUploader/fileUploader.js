@@ -34,6 +34,20 @@ class Uploader extends Component {
             progress: 100,
             isUploading: false
         })
+
+        // retrive link for file
+        firebase.storage().ref('images').child(filename).getDownloadURL()
+        .then( fileURL => {
+            this.setState({
+                fileURL
+            })
+        })
+    }
+
+    handleProgress = (progress) => {
+        this.setState({
+            progress
+        })
     }
 
     render () {
@@ -49,6 +63,23 @@ class Uploader extends Component {
                     onUploadSuccess={this.handleUploadSuccess}
                     onProgress={this.handleProgress}
                 />
+
+                {   
+                    this.state.isUploading ? 
+                        <p> Progress: {this.state.progress} %</p>
+                    : null
+                }
+
+                {
+                    this.state.fileURL ?
+                        <img style={{
+                            width: '100%'
+                        }}
+                            src = { this.state.fileURL }
+                        />
+                    : null
+                }
+                
             </div>
         )
     }

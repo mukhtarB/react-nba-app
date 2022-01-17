@@ -46,8 +46,6 @@ const FormFields = ({id, formFieldData, change}) => {
                             onChange={(event) => change({event, id, blur:false})}
                         >
 
-                        {console.log(formFieldData.config.options)}
-
                         { formFieldData.config.options.map( (item, i) => {
                             return <option key={i} value={item.id}> {item.name} </option>
                         })}
