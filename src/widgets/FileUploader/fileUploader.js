@@ -11,6 +11,13 @@ class Uploader extends Component {
         fileURL: '',
     }
 
+    handleUploadStart = () => {
+        this.setState({
+            isUploading: true,
+            progress: 0
+        })
+    }
+
     render () {
         return (
             <div>
