@@ -8,6 +8,8 @@ import { EditorState } from 'draft-js';
 import { stateToHTML } from 'draft-js-export-html';
 import { dbTeams } from "../../firebase";
 
+import Uploader from "../../widgets/FileUploader/fileUploader";
+
 class Dashboard extends Component {
 
     state = {
@@ -214,6 +216,8 @@ class Dashboard extends Component {
             <div className={style.postContainer}>
                 <form onSubmit={this.submitForm}>
                     <h2>Add Post</h2>
+
+                    <Uploader/>
 
                     <FormField
                         id={'author'}
