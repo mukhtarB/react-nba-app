@@ -66,7 +66,17 @@ class Uploader extends Component {
 
                 {   
                     this.state.isUploading ? 
-                        <p> Progress: {this.state.progress} </p>
+                        <p> Progress: {this.state.progress} %</p>
+                    : null
+                }
+                
+                {
+                    this.state.fileURL ?
+                        <img style={{
+                            width: '300px'
+                        }}
+                            src = { this.state.fileURL }
+                        />
                     : null
                 }
                 
