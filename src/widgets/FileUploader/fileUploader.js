@@ -44,6 +44,12 @@ class Uploader extends Component {
         })
     }
 
+    handleProgress = (progress) => {
+        this.setState({
+            progress
+        })
+    }
+
     render () {
         return (
             <div>
