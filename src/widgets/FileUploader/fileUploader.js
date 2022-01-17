@@ -34,6 +34,14 @@ class Uploader extends Component {
             progress: 100,
             isUploading: false
         })
+
+        // retrive link for file
+        firebase.storage().ref('images').child(filename).getDownloadURL()
+        .then( fileURL => {
+            this.setState({
+                fileURL
+            })
+        })
     }
 
     render () {
