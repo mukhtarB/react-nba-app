@@ -63,6 +63,13 @@ class Uploader extends Component {
                     onUploadSuccess={this.handleUploadSuccess}
                     onProgress={this.handleProgress}
                 />
+
+                {   
+                    this.state.isUploading ? 
+                        <p> Progress: {this.state.progress} </p>
+                    : null
+                }
+                
             </div>
         )
     }
