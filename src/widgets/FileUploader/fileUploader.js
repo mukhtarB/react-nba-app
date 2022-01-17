@@ -18,6 +18,14 @@ class Uploader extends Component {
         })
     }
 
+    handleUploadError = (error) => {
+        this.setState({
+            isUploading: false,
+        })
+        // could put a state to display error
+        console.log(error);
+    }
+
     render () {
         return (
             <div>
