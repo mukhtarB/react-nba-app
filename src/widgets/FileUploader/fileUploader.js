@@ -5,7 +5,7 @@ import FileUploader from 'react-firebase-file-uploader';
 class Uploader extends Component {
     
     state = {
-        fileName: '',
+        filename: '',
         isUploading: false,
         progress: 0,
         fileURL: '',
@@ -24,6 +24,16 @@ class Uploader extends Component {
         })
         // could put a state to display error
         console.log(error);
+    }
+
+    handleUploadSuccess = (filename) => {
+        console.log(filename)
+
+        this.setState({
+            filename,
+            progress: 100,
+            isUploading: false
+        })
     }
 
     render () {
