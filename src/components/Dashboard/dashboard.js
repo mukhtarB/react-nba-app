@@ -57,7 +57,7 @@ class Dashboard extends Component {
                 value: '',
                 valid: true
             },
-            teams: {
+            team: {
                 element: 'select',
                 value: '',
                 config: {
@@ -265,8 +265,8 @@ class Dashboard extends Component {
                     />
 
                     <FormField
-                        id={'teams'}
-                        formFieldData = {this.state.formData.teams}
+                        id={'team'}
+                        formFieldData = {this.state.formData.team}
                         change = {(newState) => this.updateFormWith(newState)}
                     />
 
