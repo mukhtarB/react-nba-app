@@ -52,6 +52,11 @@ class Dashboard extends Component {
                 value: '',
                 valid: true
             },
+            image: {
+                element: 'image',
+                value: '',
+                valid: true
+            },
             teams: {
                 element: 'select',
                 value: '',
@@ -209,6 +214,10 @@ class Dashboard extends Component {
         this.setState({
             editorState
         })
+    }
+
+    storeFilename = (filename) => {
+        this.updateFormWith({id: 'image'}, filename)
     }
 
     render () {
