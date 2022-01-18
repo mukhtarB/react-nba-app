@@ -96,10 +96,10 @@ class Dashboard extends Component {
             // update state with identical but updated copy
             
             const newFormData = {...this.state.formData};
-            const newTeamsElement = {...newFormData['teams']}
+            const newTeamsElement = {...newFormData['team']}
 
             newTeamsElement.config.options = teams;
-            newFormData['teams'] = newTeamsElement;
+            newFormData['team'] = newTeamsElement;
 
             // console.log('newFormData', newFormData)
 
