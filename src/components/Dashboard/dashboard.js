@@ -6,7 +6,7 @@ import FormField from "../../widgets/FormFields/formFields";
 import { Editor } from 'react-draft-wysiwyg';
 import { EditorState } from 'draft-js';
 import { stateToHTML } from 'draft-js-export-html';
-import { dbTeams } from "../../firebase";
+import { dbTeams, dbArticles } from "../../firebase";
 
 import Uploader from "../../widgets/FileUploader/fileUploader";
 
@@ -173,8 +173,23 @@ class Dashboard extends Component {
         console.log(dataToSubmit, formIsValid);
 
         if (formIsValid) {
-            //
-            console.log("submitted post")
+            // console.log("submitted post")
+            this.setState({
+                loading: true,
+                postError: ''
+            })
+
+            dbArticles.orderByChild('id')
+            .limitToLast(1).once('value')
+            .then( snapshot => {
+                let articleId;
+                snapshot.forEach(childSnapshot => {
+                    articleId = childSnapshot.val().id;
+                })
+
+                //
+                console.log(articleId)
+            })
         } else {
             this.setState({
                 postError: 'Something went wrong!'
