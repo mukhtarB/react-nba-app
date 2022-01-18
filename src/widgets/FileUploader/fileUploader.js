@@ -42,6 +42,8 @@ class Uploader extends Component {
                 fileURL
             })
         })
+
+        this.props.filename(filename)
     }
 
     handleProgress = (progress) => {

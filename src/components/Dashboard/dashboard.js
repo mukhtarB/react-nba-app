@@ -217,7 +217,9 @@ class Dashboard extends Component {
                 <form onSubmit={this.submitForm}>
                     <h2>Add Post</h2>
 
-                    <Uploader/>
+                    <Uploader
+                        filename = {() => {this.storeFilename(filename)}}
+                    />
 
                     <FormField
                         id={'author'}
