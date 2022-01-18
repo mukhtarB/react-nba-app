@@ -1,14 +1,17 @@
 import React, { Component } from "react";
 
-import style from './dashboard.module.css'
+import style from './dashboard.module.css';
+import withRouterHOC from "../../hoc/withRouter/withRouter";
+
 import FormField from "../../widgets/FormFields/formFields";
+import Uploader from "../../widgets/FileUploader/fileUploader";
 
 import { Editor } from 'react-draft-wysiwyg';
 import { EditorState } from 'draft-js';
 import { stateToHTML } from 'draft-js-export-html';
 import { dbTeams, dbArticles, firebase } from "../../firebase";
 
-import Uploader from "../../widgets/FileUploader/fileUploader";
+
 
 class Dashboard extends Component {
 
@@ -189,10 +192,18 @@ class Dashboard extends Component {
 
                 // necessary formarts on dataToSubmit
                 dataToSubmit['date'] = firebase.database.ServerValue.TIMESTAMP;
-                dataToSubmit['id'] = 0;
+                dataToSubmit['id'] = articleId + 1;
                 dataToSubmit['team'] = parseInt(dataToSubmit['team']);
 
-                
+                dbTeams.push(dataToSubmit)
+                .then( article => {
+                    this.props.navigate(`s/articles/${article.key}`)
+                })
+                .catch( err => {
+                    this.setState({
+                        postError: err.message
+                    })
+                })
             })
         } else {
             this.setState({
@@ -283,4 +294,4 @@ class Dashboard extends Component {
     }
 }
 
-export default Dashboard;
+export default withRouterHOC(Dashboard);
