@@ -76,6 +76,7 @@ class Uploader extends Component {
                             width: '100%'
                         }}
                             src = { this.state.fileURL }
+                            alt = 'A descriptive text'
                         />
                     : null
                 }
