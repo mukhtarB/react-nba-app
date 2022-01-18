@@ -1,14 +1,17 @@
 import React, { Component } from "react";
 
-import style from './dashboard.module.css'
+import style from './dashboard.module.css';
+import withRouterHOC from "../../hoc/withRouter/withRouter";
+
 import FormField from "../../widgets/FormFields/formFields";
+import Uploader from "../../widgets/FileUploader/fileUploader";
 
 import { Editor } from 'react-draft-wysiwyg';
 import { EditorState } from 'draft-js';
 import { stateToHTML } from 'draft-js-export-html';
-import { dbTeams } from "../../firebase";
+import { dbTeams, dbArticles, firebase } from "../../firebase";
 
-import Uploader from "../../widgets/FileUploader/fileUploader";
+
 
 class Dashboard extends Component {
 
@@ -52,7 +55,12 @@ class Dashboard extends Component {
                 value: '',
                 valid: true
             },
-            teams: {
+            image: {
+                element: 'image',
+                value: '',
+                valid: true
+            },
+            team: {
                 element: 'select',
                 value: '',
                 config: {
@@ -76,10 +84,10 @@ class Dashboard extends Component {
     loadTeams = () => {
         dbTeams.once('value')
         .then((snapshot) => {
-            let teams = [];
+            let team = [];
 
             snapshot.forEach( childSnapshot => {
-                teams.push({
+                team.push({
                     id: childSnapshot.val().teamId,
                     name: childSnapshot.val().city
                 })
@@ -91,10 +99,10 @@ class Dashboard extends Component {
             // update state with identical but updated copy
             
             const newFormData = {...this.state.formData};
-            const newTeamsElement = {...newFormData['teams']}
+            const newTeamsElement = {...newFormData['team']}
 
-            newTeamsElement.config.options = teams;
-            newFormData['teams'] = newTeamsElement;
+            newTeamsElement.config.options = team;
+            newFormData['team'] = newTeamsElement;
 
             // console.log('newFormData', newFormData)
 
@@ -168,8 +176,35 @@ class Dashboard extends Component {
         console.log(dataToSubmit, formIsValid);
 
         if (formIsValid) {
-            //
-            console.log("submitted post")
+            // console.log("submitted post")
+            this.setState({
+                loading: true,
+                postError: ''
+            })
+
+            dbArticles.orderByChild('id')
+            .limitToLast(1).once('value')
+            .then( snapshot => {
+                let articleId;
+                snapshot.forEach(childSnapshot => {
+                    articleId = childSnapshot.val().id;
+                })
+
+                // necessary formarts on dataToSubmit
+                dataToSubmit['date'] = firebase.database.ServerValue.TIMESTAMP;
+                dataToSubmit['id'] = articleId + 1;
+                dataToSubmit['team'] = parseInt(dataToSubmit['team']);
+
+                dbTeams.push(dataToSubmit)
+                .then( article => {
+                    this.props.navigate(`/articles/${article.key}`)
+                })
+                .catch( err => {
+                    this.setState({
+                        postError: err.message
+                    })
+                })
+            })
         } else {
             this.setState({
                 postError: 'Something went wrong!'
@@ -211,13 +246,19 @@ class Dashboard extends Component {
         })
     }
 
+    storeFilename = (filename) => {
+        this.updateFormWith({id: 'image'}, filename)
+    }
+
     render () {
         return(
             <div className={style.postContainer}>
                 <form onSubmit={this.submitForm}>
                     <h2>Add Post</h2>
 
-                    <Uploader/>
+                    <Uploader
+                        filename = {(filename) => this.storeFilename(filename)}
+                    />
 
                     <FormField
                         id={'author'}
@@ -239,8 +280,8 @@ class Dashboard extends Component {
                     />
 
                     <FormField
-                        id={'teams'}
-                        formFieldData = {this.state.formData.teams}
+                        id={'team'}
+                        formFieldData = {this.state.formData.team}
                         change = {(newState) => this.updateFormWith(newState)}
                     />
 
@@ -253,4 +294,4 @@ class Dashboard extends Component {
     }
 }
 
-export default Dashboard;
+export default withRouterHOC(Dashboard);
