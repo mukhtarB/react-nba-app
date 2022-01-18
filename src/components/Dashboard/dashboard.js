@@ -227,7 +227,7 @@ class Dashboard extends Component {
                     <h2>Add Post</h2>
 
                     <Uploader
-                        filename = {() => {this.storeFilename(filename)}}
+                        filename = {(filename) => this.storeFilename(filename)}
                     />
 
                     <FormField
