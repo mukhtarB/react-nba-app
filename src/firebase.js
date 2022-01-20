@@ -15,6 +15,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 const firebaseDB = firebase.database();
+const firebaseST = firebase.storage();
 const dbArticles = firebaseDB.ref('articles');
 const dbTeams = firebaseDB.ref('teams');
 const dbVideos = firebaseDB.ref('videos');
@@ -36,6 +37,7 @@ const firebaseLooper = (snapshot) => {
 export {
     firebase,
     firebaseDB,
+    firebaseST,
     dbArticles,
     dbVideos,
     dbTeams,
