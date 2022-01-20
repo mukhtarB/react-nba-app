@@ -197,7 +197,7 @@ class Dashboard extends Component {
 
                 dbTeams.push(dataToSubmit)
                 .then( article => {
-                    this.props.navigate(`/articles/${article.key}`)
+                    this.props.navigate(`/articles/${article.key}`, {replace: true})
                 })
                 .catch( err => {
                     this.setState({
