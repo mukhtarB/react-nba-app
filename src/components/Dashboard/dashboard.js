@@ -195,7 +195,7 @@ class Dashboard extends Component {
                 dataToSubmit['id'] = articleId + 1;
                 dataToSubmit['team'] = parseInt(dataToSubmit['team']);
 
-                dbTeams.push(dataToSubmit)
+                dbArticles.push(dataToSubmit)
                 .then( article => {
                     this.props.navigate(`/articles/${article.key}`, {replace: true})
                 })
