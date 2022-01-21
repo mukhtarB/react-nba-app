@@ -21,6 +21,7 @@ class NewsArticles extends Component {
         .then( snapshot => {
             let article = snapshot.val();
 
+            // dbTeams.orderByChild("id").equalTo(article.team).once('value')
             dbTeams.orderByChild("teamId").equalTo(article.team).once('value')
             .then( snapshot => {
                 
