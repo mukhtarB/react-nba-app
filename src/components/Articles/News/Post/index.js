@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { firebaseDB, firebaseLooper, dbTeams } from "../../../../firebase";
+import { firebaseDB, firebaseST, firebaseLooper, dbTeams } from "../../../../firebase";
 
 // import axios from "axios";
 // import { url } from '../../../../config';
@@ -13,7 +13,8 @@ class NewsArticles extends Component {
 
     state = {
         article: [],
-        team: []
+        team: [],
+        imgURL: null
     }
 
     UNSAFE_componentWillMount () {
@@ -30,6 +31,17 @@ class NewsArticles extends Component {
                     article,
                     team
                 })
+
+                firebaseST.ref('images').child(`${this.state.article.image}`).getDownloadURL()
+                .then( imgURL => {
+                    this.setState({
+                        imgURL
+                    })
+                })
+                .catch((error) => {
+                    // Handle any errors
+                    console.log(error)
+                });
             })
         })
 
@@ -55,6 +67,7 @@ class NewsArticles extends Component {
 
         return (
             <div className = {style.articleWrapper}>
+
                 <NewsHeader
                     teamData={team[0]}
                     date={article.date}
@@ -66,7 +79,7 @@ class NewsArticles extends Component {
                     <div
                         className={style.articleImage}
                         style={{
-                            background: `url('/images/articles/${article.image}')`
+                            background: `url(${this.state.imgURL})`
                         }}
                     >
 
@@ -75,6 +88,7 @@ class NewsArticles extends Component {
                         {article.body}
                     </div>
                 </div>
+                
             </div>
         )
     }
