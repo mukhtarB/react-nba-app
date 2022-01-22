@@ -79,7 +79,7 @@ class NewsArticles extends Component {
                     <div
                         className={style.articleImage}
                         style={{
-                            background: `url(${this.state.imgURL})`
+                            background: `url(${this.state.imgURL}), url('/images/articles/${article.image}')`
                         }}
                     >
 
