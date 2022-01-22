@@ -121,7 +121,7 @@ class NewsList extends Component {
                                     <div className = {style.flex_wrapper}>
                                         <div className ={style.left}
                                             style = {{
-                                                background: `url('/images/articles/${item.image})`
+                                                background: `url('/images/articles/${item.image}')`
                                             }}
                                         >
 
