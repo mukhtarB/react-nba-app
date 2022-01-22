@@ -9,6 +9,7 @@ import NewsMain from "./components/Articles/News/Main";
 import VideosMain from "./components/Articles/Videos/Main";
 import SignIn from "./components/signIn/signIn";
 import Dashboard from "./components/Dashboard/dashboard";
+import PrivateRoute from "./components/AuthRoutes/privateRoutes";
 
 const Routing = (props) => {
     return(
