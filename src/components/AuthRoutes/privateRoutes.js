@@ -1,10 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
-const PrivateRoute = (props) => {
+const PrivateRoute = ({
+    user,
+    children
+}) => {
+
+    // METHOD 1
+    const navigate = useNavigate();
+    const location = useLocation();
+    useEffect( ()=> {
+        if (!user) {
+            navigate('/sign-in', {state: {from: location} });
+        }
+    })
     return (
-        <div>
-            This is a private Route
-        </div>
+        <React.Fragment>
+            {children}
+        </React.Fragment>
     )
 }
 
