@@ -21,7 +21,11 @@ const Routing = (props) => {
                 <Route path='/articles/:id' exact element={<NewsArticles />} />
                 <Route path='/videos/:id' exact element={<VideoArticle />} />
                 <Route path='/sign-in' exact element={<SignIn />} />
-                <Route path='/dashboard' exact element={<Dashboard />} />
+                <Route path='/dashboard' exact element={
+                    <PrivateRoute {...props}>
+                        <Dashboard />
+                    </PrivateRoute>
+                } />
             </Routes>
         </Layout>
     )
