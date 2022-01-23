@@ -9,28 +9,29 @@ const PrivateRoute = ({
     const location = useLocation();
 
     // METHOD 1
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
     
-    // useEffect( ()=> {
-    //     if (!user) {
-    //         navigate('/sign-in', {state: {from: location} });
-    //     }
-    // })
+    useEffect( ()=> {
+        if (!user) {
+            navigate('/sign-in');
+            // navigate('/sign-in', {state: {from: location} });
+        }
+    })
 
-    // return (
-    //     <React.Fragment>
-    //         {children}
-    //     </React.Fragment>
-    // )
+    return (
+        <React.Fragment>
+            {children}
+        </React.Fragment>
+    )
     
 
     // METHOD 2 - comes with redirect to prev page for UX boost
 
-    return (
-        <React.Fragment>
-            { user ? children : <Navigate to='/sign-in' replace state={{ from:location }} />}
-        </React.Fragment>
-    )
+    // return (
+    //     <React.Fragment>
+    //         { user ? children : <Navigate to='/sign-in' replace state={{ from:location }} />}
+    //     </React.Fragment>
+    // )
 }
 
 export default PrivateRoute;
