@@ -138,7 +138,10 @@ class SignIn extends Component {
                         dataToSubmit.password
                     )
                     .then( () => {
-                        this.props.navigate('/')
+                        this.props.location.state?.from ? 
+                            this.props.navigate(this.props.location.state.from.pathname)
+                            :
+                            this.props.navigate('/');
                     })
                     .catch( (error) => {
                         this.setState({
