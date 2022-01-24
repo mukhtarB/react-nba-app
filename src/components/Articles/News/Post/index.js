@@ -40,7 +40,7 @@ class NewsArticles extends Component {
                 })
                 .catch((error) => {
                     // Handle any errors
-                    console.log(error)
+                    console.log("-> Error due to rendering both locala and cloud images:", error)
                 });
             })
         })
