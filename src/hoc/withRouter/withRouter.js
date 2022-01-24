@@ -18,3 +18,9 @@ const withRouterHOC = WrappedComponent => props => {
 };
 
 export default withRouterHOC;
+
+// -- To resolve
+// SideNavItems,
+// Dashboard,
+// signIn,
+// NewsArticles -> resolved
