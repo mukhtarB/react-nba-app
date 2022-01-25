@@ -1,4 +1,5 @@
-import React, { Component } from "react";
+import React, { Component, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { firebaseDB, firebaseST, firebaseLooper, dbTeams } from "../../../../firebase";
 
 // import axios from "axios";
@@ -27,20 +28,18 @@ class NewsArticles extends Component {
             .then( snapshot => {
                 
                 const team = firebaseLooper(snapshot);
-                this.setState({
-                    article,
-                    team
-                })
 
-                firebaseST.ref('images').child(`${this.state.article.image}`).getDownloadURL()
+                firebaseST.ref('images').child(`${article.image}`).getDownloadURL()
                 .then( imgURL => {
                     this.setState({
+                        article,
+                        team,
                         imgURL
                     })
                 })
                 .catch((error) => {
                     // Handle any errors
-                    console.log(error)
+                    console.log("-> Error due to rendering both locala and cloud images:", error)
                 });
             })
         })

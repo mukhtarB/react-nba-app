@@ -193,7 +193,7 @@ class Dashboard extends Component {
                 // necessary formarts on dataToSubmit
                 dataToSubmit['date'] = firebase.database.ServerValue.TIMESTAMP;
                 dataToSubmit['id'] = articleId + 1;
-                dataToSubmit['team'] = parseInt(dataToSubmit['team']);
+                dataToSubmit['team'] = parseInt(dataToSubmit['team'], 10);
 
                 dbArticles.push(dataToSubmit)
                 .then( article => {
