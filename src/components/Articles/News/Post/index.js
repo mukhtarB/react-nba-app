@@ -4,22 +4,24 @@ import { firebaseDB, firebaseST, firebaseLooper, dbTeams } from "../../../../fir
 
 // import axios from "axios";
 // import { url } from '../../../../config';
-import withRouterHOC from "../../../../hoc/withRouter/withRouter";
+// import withRouterHOC from "../../../../hoc/withRouter/withRouter";
 
 import style from '../../articles.module.css';
 
 import NewsHeader from "./newsHeader";
 
-class NewsArticles extends Component {
 
-    state = {
+const NewsArticles = () => {
+    const params = useParams();
+
+    const [headerState, setHeaderState] = useState({
         article: [],
         team: [],
         imgURL: null
-    }
+    });
 
-    UNSAFE_componentWillMount () {
-        firebaseDB.ref(`articles/${this.props.params.id}`).once('value')
+    useEffect( () => {
+        firebaseDB.ref(`articles/${params.id}`).once('value')
         .then( snapshot => {
             let article = snapshot.val();
 
@@ -31,7 +33,7 @@ class NewsArticles extends Component {
 
                 firebaseST.ref('images').child(`${article.image}`).getDownloadURL()
                 .then( imgURL => {
-                    this.setState({
+                    setHeaderState({
                         article,
                         team,
                         imgURL
@@ -44,8 +46,7 @@ class NewsArticles extends Component {
             })
         })
 
-
-        // axios.get(`${url}/articles/${this.props.params.id}`)
+        // axios.get(`${url}/articles/${params}`)
         // .then( response => {
         //     let article = response.data;
 
@@ -57,40 +58,38 @@ class NewsArticles extends Component {
         //         })
         //     })
         // })
-    }
+    }, []);
 
-    render () {
+    const article = headerState.article;
+    const team = headerState.team;
+    const imgURL = headerState.imgURL;
 
-        const article = this.state.article;
-        const team = this.state.team;
+    return (
+        <div className = {style.articleWrapper}>
 
-        return (
-            <div className = {style.articleWrapper}>
+            <NewsHeader
+                teamData={team[0]}
+                date={article.date}
+                author={article.author}
+            />
+            
+            <div className={style.articleBody}>
+                <h1>{article.title}</h1>
+                <div
+                    className={style.articleImage}
+                    style={{
+                        background: `url(${imgURL}), url('/images/articles/${article.image}')`
+                    }}
+                >
 
-                <NewsHeader
-                    teamData={team[0]}
-                    date={article.date}
-                    author={article.author}
-                />
-                
-                <div className={style.articleBody}>
-                    <h1>{article.title}</h1>
-                    <div
-                        className={style.articleImage}
-                        style={{
-                            background: `url(${this.state.imgURL}), url('/images/articles/${article.image}')`
-                        }}
-                    >
-
-                    </div>
-                    <div className={style.articleText}>
-                        {article.body}
-                    </div>
                 </div>
-                
+                <div className={style.articleText}>
+                    {article.body}
+                </div>
             </div>
-        )
-    }
+            
+        </div>
+    )
 }
 
-export default withRouterHOC(NewsArticles);
+export default NewsArticles;
