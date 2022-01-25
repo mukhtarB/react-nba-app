@@ -57,7 +57,7 @@ const NewsArticles = () => {
         //         })
         //     })
         // })
-    }, [params]); // NB: if params is an object, it might not work sometimes (works now tho 😅)
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     const article = headerState.article;
     const team = headerState.team;
