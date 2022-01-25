@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { firebaseDB, firebaseST, firebaseLooper, dbTeams } from "../../../../firebase";
 
@@ -7,7 +7,6 @@ import { firebaseDB, firebaseST, firebaseLooper, dbTeams } from "../../../../fir
 // import withRouterHOC from "../../../../hoc/withRouter/withRouter";
 
 import style from '../../articles.module.css';
-
 import NewsHeader from "./newsHeader";
 
 
@@ -58,7 +57,7 @@ const NewsArticles = () => {
         //         })
         //     })
         // })
-    }, []);
+    }, [params]); // eslint-disable-line react-hooks/exhaustive-deps
 
     const article = headerState.article;
     const team = headerState.team;
