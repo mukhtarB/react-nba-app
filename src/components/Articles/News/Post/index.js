@@ -57,7 +57,7 @@ const NewsArticles = () => {
         //         })
         //     })
         // })
-    }, [params.id]);
+    }, [params]); // NB: if params is an object, it might not work sometimes (works now tho 😅)
 
     const article = headerState.article;
     const team = headerState.team;
