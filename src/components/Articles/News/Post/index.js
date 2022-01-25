@@ -20,6 +20,7 @@ const NewsArticles = () => {
     });
 
     useEffect( () => {
+        let mounted = true;
         firebaseDB.ref(`articles/${params.id}`).once('value')
         .then( snapshot => {
             let article = snapshot.val();
@@ -32,15 +33,17 @@ const NewsArticles = () => {
 
                 firebaseST.ref('images').child(`${article.image}`).getDownloadURL()
                 .then( imgURL => {
-                    setHeaderState({
-                        article,
-                        team,
-                        imgURL
-                    })
+                    if (mounted) {
+                        setHeaderState({
+                            article,
+                            team,
+                            imgURL
+                        })
+                    }
                 })
                 .catch((error) => {
                     // Handle any errors
-                    console.log("-> Error due to rendering both locala and cloud images:", error)
+                    console.log("-> Error due to rendering both local and cloud images:", error)
                 });
             })
         })
@@ -57,6 +60,9 @@ const NewsArticles = () => {
         //         })
         //     })
         // })
+        return () => {
+            mounted = false;
+        }
     }, [params]); // eslint-disable-line react-hooks/exhaustive-deps
 
     const article = headerState.article;
