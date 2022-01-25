@@ -57,7 +57,7 @@ const NewsArticles = () => {
         //         })
         //     })
         // })
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [params]); // eslint-disable-line react-hooks/exhaustive-deps
 
     const article = headerState.article;
     const team = headerState.team;
