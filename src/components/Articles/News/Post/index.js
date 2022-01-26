@@ -44,6 +44,12 @@ const NewsArticles = () => {
                 .catch((error) => {
                     // Handle any errors
                     console.log("-> Error due to rendering both local and cloud images:", error)
+                    if (mounted) {
+                        setHeaderState({
+                            article,
+                            team
+                        })
+                    }
                 });
             })
         })
