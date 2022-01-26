@@ -1,13 +1,13 @@
 import React from "react";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import style from './sideNav.module.css';
 import FontAwesome from "react-fontawesome";
 import { firebase } from "../../../firebase";
-import withRouterHOC from "../../../hoc/withRouter/withRouter";
 
 
 const SideNavItems = (props) => {
+    const navigate = useNavigate();
     
     const items = [
         {
@@ -81,7 +81,7 @@ const SideNavItems = (props) => {
                     onClick={() => {
                         firebase.auth().signOut()
                         .then(() => {
-                            props.navigate('/')
+                            navigate('/')
                         })
                     }}
                     >
@@ -113,4 +113,4 @@ const SideNavItems = (props) => {
     )
 }
 
-export default withRouterHOC(SideNavItems);
+export default SideNavItems;
