@@ -21,38 +21,52 @@ const NewsArticles = () => {
 
     useEffect( () => {
         let mounted = true;
+
         firebaseDB.ref(`articles/${params.id}`).once('value')
         .then( snapshot => {
             let article = snapshot.val();
-
-            // dbTeams.orderByChild("id").equalTo(article.team).once('value')
-            dbTeams.orderByChild("teamId").equalTo(article.team).once('value')
-            .then( snapshot => {
-                
-                const team = firebaseLooper(snapshot);
-
-                firebaseST.ref('images').child(`${article.image}`).getDownloadURL()
-                .then( imgURL => {
-                    if (mounted) {
-                        setHeaderState({
-                            article,
-                            team,
-                            imgURL
-                        })
-                    }
-                })
-                .catch((error) => {
-                    // Handle any errors
-                    console.log("-> Error due to rendering both local and cloud images:", error)
-                    if (mounted) {
-                        setHeaderState({
-                            article,
-                            team
-                        })
-                    }
-                });
-            })
+            return article;
         })
+        .then( article => {
+
+            return dbTeams.orderByChild("teamId").equalTo(article?.team).once('value')
+                .then( snapshot => {
+                    const team = firebaseLooper(snapshot);
+                    return [article, team];
+                }).catch ( teamErr => {
+                    throw Error ("NBA App: Unable to retrieve (article.team) from dbTeams")
+                });
+
+        })
+        .then( async ([article, team]) => {
+
+            try {
+                const imgURL = await firebaseST.ref('images').child(`${article.image}`).getDownloadURL();
+                return [article, team, imgURL];
+            } catch (error) {
+                console.log(error);
+                return [article, team, null];
+            }
+
+        })
+        .then ( ([article, team, imgURL]) => {
+            if (mounted) setHeaderState({article, team, imgURL})
+        })
+        .catch( fetchArticleError => {
+            const errInfo = {
+                src: 'NBA App',
+                loc: 'NewsArticles Component',
+                msg: 'Unable to retrieve articles / teams from firebaseDB'
+            }
+            throw Error(`
+                ${fetchArticleError}
+                ${errInfo.src},
+                ${errInfo.loc},
+                ${errInfo.msg}.`
+            )
+        })
+        
+        
 
         // axios.get(`${url}/articles/${params}`)
         // .then( response => {
