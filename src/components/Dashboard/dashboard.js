@@ -172,6 +172,20 @@ const Dashboard = () => {
         }
     }, []);
 
+
+    // -- all component functions
+
+    const updateFormWith = (element, content=null) => {
+        let action = {
+            type: 'updateFormWith',
+            payload : {
+                element,
+                content
+            }
+        }
+        dispatch(action);
+    };   
+
     return (
         <div>
             Dashboard
