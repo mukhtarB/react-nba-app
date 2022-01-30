@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useReducer, useState } from "react";
 
 import style from './dashboard.module.css';
 // import withRouterHOC from "../../hoc/withRouter/withRouter";
@@ -139,6 +139,9 @@ const Dashboard = () => {
         postError: '',
         loading: false,
     });
+
+    const [formDataState, dispatch] = useReducer(reducer, formData);
+    // console.table(formDataState);
 
     return (
         <div>
