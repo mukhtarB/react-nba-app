@@ -240,6 +240,15 @@ const Dashboard = () => {
 
     };
 
+    const submitButton = () => (
+        formMetaData.loading ?
+            'loading...'
+        :
+            <div>
+                <button type="submit">Add Post</button>
+            </div>
+    );
+
     return (
         <div>
             Dashboard
