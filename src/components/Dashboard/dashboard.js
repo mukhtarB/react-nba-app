@@ -273,6 +273,10 @@ const Dashboard = () => {
         });
     };
 
+    const storeFileImage = (filename) => {
+        updateFormWith({id: 'image'}, filename);
+    };
+
     return (
         <div>
             Dashboard
