@@ -258,6 +258,21 @@ const Dashboard = () => {
             ''
     );
 
+    // functionality of editor using state as a controlled form
+    const onEditorStateChange = (editorState) => {
+
+        let contentState = editorState.getCurrentContent();
+        // let rawState = convertToRaw(contentState);
+
+        let html = stateToHTML(contentState)
+        
+        updateFormWith({id: 'body'}, html);
+
+        setFormMetaData({
+            editorState
+        });
+    };
+
     return (
         <div>
             Dashboard
