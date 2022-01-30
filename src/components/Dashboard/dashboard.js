@@ -13,6 +13,64 @@ import { dbTeams, dbArticles, firebase } from "../../firebase";
 
 
 const Dashboard = () => {
+    const formData = {
+        author: {
+            element: 'input',
+            value: '',
+            config: {
+                type: 'text',
+                name: 'author_input',
+                placeholder: 'Enter your name?'
+            },
+            validation: {
+                required: true,
+            },
+            valid: false,
+            touched: false,
+            validationMessage: '',
+        },
+        title: {
+            element: 'input',
+            value: '',
+            config: {
+                type: 'text',
+                name: 'title_input',
+                placeholder: 'Enter your title?'
+            },
+            validation: {
+                required: true,
+            },
+            valid: false,
+            touched: false,
+            validationMessage: '',
+        },
+        body: {
+            element: 'testeditor',
+            value: '',
+            valid: true
+        },
+        image: {
+            element: 'image',
+            value: '',
+            valid: true
+        },
+        team: {
+            element: 'select',
+            value: '',
+            config: {
+                name: 'teams_input',
+                options: []
+            },
+            validation: {
+                required: true,
+            },
+            valid: false,
+            touched: false,
+            validationMessage: '',
+        }
+    };
+
+    
     return (
         <div>
             Dashboard
