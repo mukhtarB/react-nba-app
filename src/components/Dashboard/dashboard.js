@@ -184,7 +184,61 @@ const Dashboard = () => {
             }
         }
         dispatch(action);
-    };   
+    };
+
+    const submitForm = (event) => {
+        event.preventDefault();
+
+        let dataToSubmit = {};
+        let formIsValid = true;
+
+        for (let key in formDataState) {
+            dataToSubmit[key] = formDataState[key].value;
+        }
+
+        for (let key in formDataState) {
+            formIsValid = formDataState[key].valid && formIsValid;
+        }
+
+        // console.log(dataToSubmit, formIsValid);
+
+        if (formIsValid) {
+            // console.log("submitted post")
+            setFormMetaData({
+                loading: true,
+                postError: ''
+            });
+
+            dbArticles.orderByChild('id')
+            .limitToLast(1).once('value')
+            .then( snapshot => {
+                let articleId;
+                snapshot.forEach(childSnapshot => {
+                    articleId = childSnapshot.val().id;
+                })
+
+                // necessary formarts on dataToSubmit
+                dataToSubmit['date'] = firebase.database.ServerValue.TIMESTAMP;
+                dataToSubmit['id'] = articleId + 1;
+                dataToSubmit['team'] = parseInt(dataToSubmit['team'], 10);
+
+                dbArticles.push(dataToSubmit)
+                .then( article => {
+                    navigate(`/articles/${article.key}`, {replace: true})
+                })
+                .catch( err => {
+                    setFormMetaData({
+                        postError: err.message
+                    })
+                })
+            })
+        } else {
+            setFormMetaData({
+                postError: 'Something went wrong!'
+            })
+        }
+
+    };
 
     return (
         <div>
