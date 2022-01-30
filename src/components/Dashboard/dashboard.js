@@ -84,6 +84,55 @@ const Dashboard = () => {
         return error;
     };
 
+    // -- all logic for updating (formData) state
+    const reducer = (state, action) => {
+        let newFormData;
+
+        switch (action.type) {
+            case 'loadTeams':
+                // make a copy of current state
+                // update the copy with new info
+                // update state with identical but updated copy
+                newFormData = {...state};
+                const newTeamsElement = {...newFormData['team']}
+    
+                newTeamsElement.config.options = action.payload;
+                newFormData['team'] = newTeamsElement;
+                break;
+            
+            case 'updateFormWith':
+                newFormData = {...state}
+        
+                const elementField = {
+                    ...newFormData[action.payload.element.id]
+                }
+        
+                if (action.payload.content){
+                    elementField.value = action.payload.content;
+                } else {
+                    elementField.value = action.payload.element.event.target.value;
+                }
+        
+                if (action.payload.element.blur) {
+                    let validData = validate(elementField);
+        
+                    // updating the formData input field with it's validation info
+                    elementField.valid = validData[0];
+                    elementField.validationMessage = validData[1];
+                }
+        
+                elementField.touched = action.payload.element.blur;
+                newFormData[action.payload.element.id] = elementField;
+                break;
+        
+            default:
+                newFormData = state;
+                break;
+        }
+
+        return newFormData;
+    };
+
     return (
         <div>
             Dashboard
