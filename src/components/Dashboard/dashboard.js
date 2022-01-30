@@ -1,7 +1,7 @@
-import React, { useReducer, useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import style from './dashboard.module.css';
-// import withRouterHOC from "../../hoc/withRouter/withRouter";
 
 import FormField from "../../widgets/FormFields/formFields";
 import Uploader from "../../widgets/FileUploader/fileUploader";
@@ -13,6 +13,8 @@ import { dbTeams, dbArticles, firebase } from "../../firebase";
 
 
 const Dashboard = () => {
+    const navigate = useNavigate();
+
     const formData = {
         author: {
             element: 'input',
@@ -316,7 +318,7 @@ const Dashboard = () => {
 
             </form>
         </div>
-    )
-}
+    );
+};
 
 export default Dashboard;
