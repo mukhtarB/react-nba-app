@@ -143,6 +143,35 @@ const Dashboard = () => {
     const [formDataState, dispatch] = useReducer(reducer, formData);
     // console.table(formDataState);
 
+    useEffect(() => {
+        let mounted = true
+        
+        dbTeams.once('value')
+        .then((snapshot) => {
+            let team = [];
+
+            snapshot.forEach( childSnapshot => {
+                team.push({
+                    id: childSnapshot.val().teamId,
+                    name: childSnapshot.val().city
+                })
+            });
+
+            // call the dispatch
+            // console.table(team);
+            let action = {
+                type: 'loadTeams',
+                payload: team
+            };
+
+            if (mounted) dispatch(action);
+        })
+
+        return () => {
+            mounted = false;
+        }
+    }, []);
+
     return (
         <div>
             Dashboard
