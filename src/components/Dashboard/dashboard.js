@@ -278,8 +278,43 @@ const Dashboard = () => {
     };
 
     return (
-        <div>
-            Dashboard
+        <div className={style.postContainer}>
+            <form onSubmit={submitForm}>
+                <h2>Add Post</h2>
+
+                <Uploader
+                    filename = {(filename) => storeFileImage(filename)}
+                />
+
+                <FormField
+                    id={'author'}
+                    formFieldData = {formDataState.author}
+                    change = {(newState) => updateFormWith(newState)}
+                />
+
+                <FormField
+                    id={'title'}
+                    formFieldData = {formDataState.title}
+                    change = {(newState) => updateFormWith(newState)}
+                />
+
+                <Editor
+                    editorState={formMetaData.editorState}
+                    wrapperClassName="myEditor-wrapper"
+                    editorClassName="myEditor-editor"
+                    onEditorStateChange={onEditorStateChange}
+                />
+
+                <FormField
+                    id={'team'}
+                    formFieldData = {formDataState.team}
+                    change = {(newState) => updateFormWith(newState)}
+                />
+
+                {submitButton()}
+                {showError()}
+
+            </form>
         </div>
     )
 }
