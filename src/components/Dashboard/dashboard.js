@@ -70,7 +70,20 @@ const Dashboard = () => {
         }
     };
 
-    
+    const validate = (elementField) => {
+        let error = [true, ''];
+
+        // required validation
+        if (elementField.validation.required) {
+            const valid = elementField.value.trim() !== '';
+            const message = `${!valid ? 'This field is required!' : ''}`;
+
+            error = !valid ? [valid, message] : error
+        }
+
+        return error;
+    };
+
     return (
         <div>
             Dashboard
