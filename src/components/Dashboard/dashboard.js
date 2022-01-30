@@ -249,6 +249,15 @@ const Dashboard = () => {
             </div>
     );
 
+    const showError = () => (
+        formMetaData.postError !== '' ? 
+            <div className={style.error}>
+                {formMetaData.postError}
+            </div>
+        :
+            ''
+    );
+
     return (
         <div>
             Dashboard
