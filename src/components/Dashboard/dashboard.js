@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import style from './dashboard.module.css';
 // import withRouterHOC from "../../hoc/withRouter/withRouter";
@@ -132,6 +132,13 @@ const Dashboard = () => {
 
         return newFormData;
     };
+
+    // all state declarations
+    const [formMetaData, setFormMetaData] = useState({
+        editorState: EditorState.createEmpty(),
+        postError: '',
+        loading: false,
+    });
 
     return (
         <div>
