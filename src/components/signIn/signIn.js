@@ -186,6 +186,15 @@ const SignIn = () => {
             </div>
     );
 
+    const showError = () => (
+        formMetaData.registerError !== '' ? 
+            <div className={style.error}>
+                {formMetaData.registerError}
+            </div>
+        :
+            ''
+    );
+
     return (
         <div>
             SignIn functional component
