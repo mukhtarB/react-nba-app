@@ -77,21 +77,21 @@ const SignIn = () => {
     const reducer = (state, action) => {
         const newFormData = {...state}
 
-        const newElement = {
+        const newElementField = {
             ...newFormData[element.id]
         }
-        newElement.value = element.event.target.value;
+        newElementField.value = element.event.target.value;
 
         if (element.blur) {
-            let validData = validate(newElement)
+            let validData = validate(newElementField)
 
             // updating the formdata input field with it's validation info
-            newElement.valid = validData[0];
-            newElement.validationMessage = validData[1];
+            newElementField.valid = validData[0];
+            newElementField.validationMessage = validData[1];
         };
 
-        newElement.touched = element.blur;
-        newFormData[element.id] = newElement;
+        newElementField.touched = element.blur;
+        newFormData[element.id] = newElementField;
 
         return newFormData;
     };
