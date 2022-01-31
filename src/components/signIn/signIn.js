@@ -44,28 +44,28 @@ const SignIn = () => {
         }
     };
 
-    const validate = (element) => {
+    const validate = (elementField) => {
         let error = [true, ''];
 
         // email validation
-        if (element.validation.email_rule) {
-            const valid = /\S+@\S+\.\S+/.test(element.value);
+        if (elementField.validation.email_rule) {
+            const valid = /\S+@\S+\.\S+/.test(elementField.value);
             const message = `${!valid ? 'This is not a valid email!' : ''}`;
 
             error = !valid ? [valid, message] : error
         }
 
         // password validation
-        if (element.validation.password_rule) {
-            const valid = element.value.length >= 5;
+        if (elementField.validation.password_rule) {
+            const valid = elementField.value.length >= 5;
             const message = `${!valid ? 'Password cannot be less than 5!' : ''}`;
 
             error = !valid ? [valid, message] : error
         }
 
         // required validation
-        if (element.validation.required) {
-            const valid = element.value.trim() !== '';
+        if (elementField.validation.required) {
+            const valid = elementField.value.trim() !== '';
             const message = `${!valid ? 'This field is required!' : ''}`;
 
             error = !valid ? [valid, message] : error
