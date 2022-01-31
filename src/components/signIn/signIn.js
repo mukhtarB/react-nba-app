@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useReducer, useState } from "react";
 
 import style from './signIn.module.css';
 import { firebase } from "../../firebase";
@@ -73,6 +73,18 @@ const SignIn = () => {
 
         return error;
     };
+
+    const reducer = (state, action) => {
+
+    };
+
+    // state variables
+    const [formMetaData, setFormMetaData] = useState({
+        registerError: '',
+        loading: false
+    });
+
+    const [formData, dispatch] = useReducer(reducer, formData);
 
     return (
         <div>
