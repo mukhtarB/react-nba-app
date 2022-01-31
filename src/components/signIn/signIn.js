@@ -120,12 +120,12 @@ const SignIn = () => {
             let dataToSubmit = {};
             let formIsValid = true;
 
-            for (let key in this.state.formData) {
-                dataToSubmit[key] = this.state.formData[key].value;
+            for (let key in formDataState) {
+                dataToSubmit[key] = formDataState[key].value;
             };
 
-            for (let key in this.state.formData) {
-                formIsValid = this.state.formData[key].valid && formIsValid;
+            for (let key in formDataState) {
+                formIsValid = formDataState[key].valid && formIsValid;
             };
 
             if (formIsValid) {
