@@ -81,11 +81,11 @@ const SignIn = () => {
         const newFormData = {...state}
 
         const newElementField = {
-            ...newFormData[action.element.id]
+            ...newFormData[action.eventConfig.id]
         }
-        newElementField.value = action.element.event.target.value;
+        newElementField.value = action.eventConfig.event.target.value;
 
-        if (action.element.blur) {
+        if (action.eventConfig.blur) {
             let validData = validate(newElementField)
 
             // updating the formdata input field with it's validation info
@@ -93,8 +93,8 @@ const SignIn = () => {
             newElementField.validationMessage = validData[1];
         };
 
-        newElementField.touched = action.element.blur;
-        newFormData[action.element.id] = newElementField;
+        newElementField.touched = action.eventConfig.blur;
+        newFormData[action.eventConfig.id] = newElementField;
 
         return newFormData;
     };
@@ -106,11 +106,6 @@ const SignIn = () => {
     });
 
     const [formDataState, dispatch] = useReducer(reducer, formData);
-
-    const updateFormWith = (element) => {
-        let action = {element};
-        dispatch(action);
-    };
 
     const submitForm = (event, type) => {
         event.preventDefault();
@@ -202,13 +197,13 @@ const SignIn = () => {
                 <FormField
                     id={'email'}
                     formFieldData = {formDataState.email}
-                    change = {(newState) => updateFormWith (newState)}
+                    change = {(eventConfig) => dispatch({eventConfig}) }
                 />
                 
                 <FormField
                     id={'password'}
                     formFieldData = {formDataState.password}
-                    change = {(newState) => updateFormWith (newState)}
+                    change = {(eventConfig) => dispatch({eventConfig}) }
                 />
 
                 {showError()}

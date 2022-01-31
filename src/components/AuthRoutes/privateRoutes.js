@@ -7,14 +7,18 @@ const PrivateRoute = ({
 }) => {
 
     const location = useLocation();
+    console.log(user)
 
     // METHOD 1
     const navigate = useNavigate();
     
     useEffect( ()=> {
         if (!user) {
-            navigate('/sign-in');
-            // navigate('/sign-in', {state: {from: location} });
+            // navigate('/sign-in');
+            navigate('/sign-in', {
+                replace: true,
+                state: {from: location},
+            });
         }
     })
 
