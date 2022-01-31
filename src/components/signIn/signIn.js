@@ -75,7 +75,25 @@ const SignIn = () => {
     };
 
     const reducer = (state, action) => {
+        const newFormData = {...state}
 
+        const newElement = {
+            ...newFormData[element.id]
+        }
+        newElement.value = element.event.target.value;
+
+        if (element.blur) {
+            let validData = validate(newElement)
+
+            // updating the formdata input field with it's validation info
+            newElement.valid = validData[0];
+            newElement.validationMessage = validData[1];
+        };
+
+        newElement.touched = element.blur;
+        newFormData[element.id] = newElement;
+
+        return newFormData;
     };
 
     // state variables
@@ -85,6 +103,11 @@ const SignIn = () => {
     });
 
     const [formData, dispatch] = useReducer(reducer, formData);
+
+    const updateFormWith = (element) => {
+        let action = {element};
+        dispatch(action);
+    };
 
     return (
         <div>
