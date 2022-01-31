@@ -196,8 +196,25 @@ const SignIn = () => {
     );
 
     return (
-        <div>
-            SignIn functional component
+        <div className={style.logContainer}>
+            <form onSubmit={(event) => submitForm(event, null)}>
+                <h2>Register / Log In</h2>
+                <FormField
+                    id={'email'}
+                    formFieldData = {formData.email}
+                    change = {(newState) => updateFormWith (newState)}
+                />
+                
+                <FormField
+                    id={'password'}
+                    formFieldData = {formData.password}
+                    change = {(newState) => updateFormWith (newState)}
+                />
+
+                {showError()}
+                {submitButton()}
+                
+            </form>
         </div>
     );
 };
