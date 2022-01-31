@@ -82,11 +82,11 @@ const SignIn = () => {
         const newFormData = {...state}
 
         const newElementField = {
-            ...newFormData[element.id]
+            ...newFormData[action.element.id]
         }
-        newElementField.value = element.event.target.value;
+        newElementField.value = action.element.event.target.value;
 
-        if (element.blur) {
+        if (action.element.blur) {
             let validData = validate(newElementField)
 
             // updating the formdata input field with it's validation info
@@ -94,8 +94,8 @@ const SignIn = () => {
             newElementField.validationMessage = validData[1];
         };
 
-        newElementField.touched = element.blur;
-        newFormData[element.id] = newElementField;
+        newElementField.touched = action.element.blur;
+        newFormData[action.element.id] = newElementField;
 
         return newFormData;
     };
@@ -106,7 +106,7 @@ const SignIn = () => {
         loading: false
     });
 
-    const [formData, dispatch] = useReducer(reducer, formData);
+    const [formDataState, dispatch] = useReducer(reducer, formData);
 
     const updateFormWith = (element) => {
         let action = {element};
@@ -201,13 +201,13 @@ const SignIn = () => {
                 <h2>Register / Log In</h2>
                 <FormField
                     id={'email'}
-                    formFieldData = {formData.email}
+                    formFieldData = {formDataState.email}
                     change = {(newState) => updateFormWith (newState)}
                 />
                 
                 <FormField
                     id={'password'}
-                    formFieldData = {formData.password}
+                    formFieldData = {formDataState.password}
                     change = {(newState) => updateFormWith (newState)}
                 />
 
