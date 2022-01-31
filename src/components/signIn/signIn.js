@@ -176,6 +176,16 @@ const SignIn = () => {
         };
     };
 
+    const submitButton = () => (
+        formMetaData.loading ? 
+            'loading...'
+        :
+            <div>
+                <button onClick={(event) => submitForm(event, false)}>Register Now</button>
+                <button onClick={(event) => submitForm(event, true)}>Log In</button>
+            </div>
+    );
+
     return (
         <div>
             SignIn functional component
