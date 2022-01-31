@@ -6,9 +6,13 @@ import withRouterHOC from "../../hoc/withRouter/withRouter";
 
 // components
 import FormField from "../../widgets/FormFields/formFields";
+import { useLocation, useNavigate } from "react-router-dom";
 
 
 const SignIn = () => {
+    const location = useLocation();
+    const navigate = useNavigate();
+
     const formData = {
         email: {
             element: 'input',
@@ -107,6 +111,69 @@ const SignIn = () => {
     const updateFormWith = (element) => {
         let action = {element};
         dispatch(action);
+    };
+
+    const submitForm = (event, type) => {
+        event.preventDefault();
+
+        if (type !== null) {
+            let dataToSubmit = {};
+            let formIsValid = true;
+
+            for (let key in this.state.formData) {
+                dataToSubmit[key] = this.state.formData[key].value;
+            };
+
+            for (let key in this.state.formData) {
+                formIsValid = this.state.formData[key].valid && formIsValid;
+            };
+
+            if (formIsValid) {
+                // console.log(dataToSubmit);
+                setFormMetaData({
+                    loading: true,
+                    registerError: ''
+                });
+
+                if (type) {
+                    // LOG IN
+                    firebase.auth()
+                    .signInWithEmailAndPassword(
+                        dataToSubmit.email,
+                        dataToSubmit.password
+                    )
+                    .then( () => {
+                        location.state?.from ? 
+                            navigate(location.state.from.pathname)
+                            :
+                            navigate('/');
+                    })
+                    .catch( (error) => {
+                        setFormMetaData({
+                            loading: true,
+                            registerError: error.message
+                        })
+                    })
+                } else {
+                    // REGISTER
+                    firebase.auth()
+                    .createUserWithEmailAndPassword(
+                        dataToSubmit.email,
+                        dataToSubmit.password
+                    )
+                    .then( () => {
+                        navigate('/');
+                    })
+                    .catch( (error) => {
+                        setFormMetaData({
+                            loading: true,
+                            registerError: error.message
+                        });
+                    });
+                    
+                };
+            };
+        };
     };
 
     return (
