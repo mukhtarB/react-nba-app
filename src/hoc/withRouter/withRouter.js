@@ -24,3 +24,4 @@ export default withRouterHOC;
 // Dashboard,
 // signIn,
 // NewsArticles -> resolved
+// Uplolader

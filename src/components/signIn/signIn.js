@@ -1,134 +1,133 @@
-import React, { Component } from "react";
+import React, { useReducer, useState } from "react";
 
 import style from './signIn.module.css';
 import { firebase } from "../../firebase";
-import withRouterHOC from "../../hoc/withRouter/withRouter";
 
 // components
 import FormField from "../../widgets/FormFields/formFields";
+import { useLocation, useNavigate } from "react-router-dom";
 
 
+const SignIn = () => {
+    const location = useLocation();
+    const navigate = useNavigate();
 
-class SignIn extends Component {
-
-    state = {
-        registerError: '',
-        loading: false,
-        formData: {
-            email: {
-                element: 'input',
-                value: '',
-                config: {
-                    type: 'input',
-                    name: 'email_input',
-                    placeholder: 'Enter your email'
-                },
-                validation: {
-                    required: true,
-                    email_rule: true
-                },
-                valid: false,
-                touched: false,
-                validationMessage: '',
+    const formData = {
+        email: {
+            element: 'input',
+            value: '',
+            config: {
+                type: 'input',
+                name: 'email_input',
+                placeholder: 'Enter your email'
             },
-            password: {
-                element: 'input',
-                value: '',
-                config: {
-                    type: 'password',
-                    name: 'password_input',
-                    placeholder: 'Enter your password'
-                },
-                validation: {
-                    required: true,
-                    password_rule: true
-                },
-                valid: false,
-                touched: false,
-                validationMessage: '',
-            }
+            validation: {
+                required: true,
+                email_rule: true
+            },
+            valid: false,
+            touched: false,
+            validationMessage: '',
+        },
+        password: {
+            element: 'input',
+            value: '',
+            config: {
+                type: 'password',
+                name: 'password_input',
+                placeholder: 'Enter your password'
+            },
+            validation: {
+                required: true,
+                password_rule: true
+            },
+            valid: false,
+            touched: false,
+            validationMessage: '',
         }
-    }
+    };
 
-    updateFormWith = (element) => {
-        
-        const newFormData = {
-            ...this.state.formData
-        }
-
-        const newElement = {
-            ...newFormData[element.id]
-        }
-        newElement.value = element.event.target.value;
-
-        if (element.blur) {
-            let validData = this.validate(newElement)
-
-            // updating the formdata input field with it's validation info
-            newElement.valid = validData[0];
-            newElement.validationMessage = validData[1];
-        }
-
-        newElement.touched = element.blur;
-        newFormData[element.id] = newElement;
-
-        // console.log(newFormData);
-        this.setState({
-            formData: newFormData
-        })
-    }
-
-    validate = (element) => {
+    const validate = (elementField) => {
         let error = [true, ''];
 
         // email validation
-        if (element.validation.email_rule) {
-            const valid = /\S+@\S+\.\S+/.test(element.value);
+        if (elementField.validation.email_rule) {
+            const valid = /\S+@\S+\.\S+/.test(elementField.value);
             const message = `${!valid ? 'This is not a valid email!' : ''}`;
 
             error = !valid ? [valid, message] : error
         }
 
         // password validation
-        if (element.validation.password_rule) {
-            const valid = element.value.length >= 5;
+        if (elementField.validation.password_rule) {
+            const valid = elementField.value.length >= 5;
             const message = `${!valid ? 'Password cannot be less than 5!' : ''}`;
 
             error = !valid ? [valid, message] : error
         }
 
         // required validation
-        if (element.validation.required) {
-            const valid = element.value.trim() !== '';
+        if (elementField.validation.required) {
+            const valid = elementField.value.trim() !== '';
             const message = `${!valid ? 'This field is required!' : ''}`;
 
             error = !valid ? [valid, message] : error
         }
 
         return error;
-    }
+    };
 
-    submitForm = (event, type) => {
+    const reducer = (state, action) => {
+        const newFormData = {...state}
+
+        const newElementField = {
+            ...newFormData[action.eventConfig.id]
+        }
+        newElementField.value = action.eventConfig.event.target.value;
+
+        if (action.eventConfig.blur) {
+            let validData = validate(newElementField)
+
+            // updating the formdata input field with it's validation info
+            newElementField.valid = validData[0];
+            newElementField.validationMessage = validData[1];
+        };
+
+        newElementField.touched = action.eventConfig.blur;
+        newFormData[action.eventConfig.id] = newElementField;
+
+        return newFormData;
+    };
+
+    // state variables
+    const [formMetaData, setFormMetaData] = useState({
+        registerError: '',
+        loading: false
+    });
+
+    const [formDataState, dispatch] = useReducer(reducer, formData);
+
+    const submitForm = (event, type) => {
         event.preventDefault();
 
         if (type !== null) {
             let dataToSubmit = {};
             let formIsValid = true;
 
-            for (let key in this.state.formData) {
-                dataToSubmit[key] = this.state.formData[key].value;
-            }
+            for (let key in formDataState) {
+                dataToSubmit[key] = formDataState[key].value;
+            };
 
-            for (let key in this.state.formData) {
-                formIsValid = this.state.formData[key].valid && formIsValid;
-            }
+            for (let key in formDataState) {
+                formIsValid = formDataState[key].valid && formIsValid;
+            };
 
             if (formIsValid) {
                 // console.log(dataToSubmit);
-                this.setState({
+                setFormMetaData({
                     loading: true,
                     registerError: ''
-                })
+                });
 
                 if (type) {
                     // LOG IN
@@ -138,17 +137,17 @@ class SignIn extends Component {
                         dataToSubmit.password
                     )
                     .then( () => {
-                        this.props.location.state?.from ? 
-                            this.props.navigate(this.props.location.state.from.pathname)
+                        location.state?.from ?
+                            navigate(location.state.from.pathname, {replace: true})
+                            // console.log(location, location.state.from.pathname)
                             :
-                            this.props.navigate('/');
+                            navigate('/');
                     })
                     .catch( (error) => {
-                        this.setState({
+                        setFormMetaData({
                             loading: true,
                             registerError: error.message
                         })
-                        // console.log("Error ->", this.state.registerError)
                     })
                 } else {
                     // REGISTER
@@ -158,64 +157,61 @@ class SignIn extends Component {
                         dataToSubmit.password
                     )
                     .then( () => {
-                        this.props.navigate('/')
+                        navigate('/');
                     })
                     .catch( (error) => {
-                        this.setState({
+                        setFormMetaData({
                             loading: true,
                             registerError: error.message
-                        })
-                        // console.log("Error ->", this.state.registerError)
-                    })
+                        });
+                    });
                     
-                }
-            }
-        }
-    }
+                };
+            };
+        };
+    };
 
-    submitButton = () => (
-        this.state.loading ? 
+    const submitButton = () => (
+        formMetaData.loading ? 
             'loading...'
         :
             <div>
-                <button onClick={(event) => this.submitForm(event, false)}>Register Now</button>
-                <button onClick={(event) => this.submitForm(event, true)}>Log In</button>
+                <button onClick={(event) => submitForm(event, false)}>Register Now</button>
+                <button onClick={(event) => submitForm(event, true)}>Log In</button>
             </div>
-    )
+    );
 
-    showError = () => (
-        this.state.registerError !== '' ? 
+    const showError = () => (
+        formMetaData.registerError !== '' ? 
             <div className={style.error}>
-                {this.state.registerError}
+                {formMetaData.registerError}
             </div>
         :
             ''
-    )
+    );
 
-    render () {
-        return (
-            <div className={style.logContainer}>
-                <form onSubmit={(event) => this.submitForm(event, null)}>
-                    <h2>Register / Log In</h2>
-                    <FormField
-                        id={'email'}
-                        formFieldData = {this.state.formData.email}
-                        change = {(newState) => this.updateFormWith (newState)}
-                    />
-                  
-                    <FormField
-                        id={'password'}
-                        formFieldData = {this.state.formData.password}
-                        change = {(newState) => this.updateFormWith (newState)}
-                    />
+    return (
+        <div className={style.logContainer}>
+            <form onSubmit={(event) => submitForm(event, null)}>
+                <h2>Register / Log In</h2>
+                <FormField
+                    id={'email'}
+                    formFieldData = {formDataState.email}
+                    change = {(eventConfig) => dispatch({eventConfig}) }
+                />
+                
+                <FormField
+                    id={'password'}
+                    formFieldData = {formDataState.password}
+                    change = {(eventConfig) => dispatch({eventConfig}) }
+                />
 
-                    {this.showError()}
-                    {this.submitButton()}
-                    
-                </form>
-            </div>
-        )
-    }
-}
+                {showError()}
+                {submitButton()}
+                
+            </form>
+        </div>
+    );
+};
 
-export default withRouterHOC(SignIn);
+export default SignIn;
