@@ -1,41 +1,16 @@
-import React, { useEffect } from "react";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+// import React from "react";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 
-const PrivateRoute = ({
-    user,
-    children
-}) => {
+const PrivateRoute = ({user}) => {
 
     const location = useLocation();
-    console.log(user)
-
-    // METHOD 1
-    const navigate = useNavigate();
-    
-    useEffect( ()=> {
-        if (!user) {
-            // navigate('/sign-in');
-            navigate('/sign-in', {
-                replace: true,
-                state: {from: location},
-            });
-        }
-    })
+    console.log("p-routing", user)
 
     return (
-        <React.Fragment>
-            {children}
-        </React.Fragment>
-    )
-    
-
-    // METHOD 2 - comes with redirect to prev page for UX boost
-
-    // return (
-    //     <React.Fragment>
-    //         { user ? children : <Navigate to='/sign-in' replace state={{ from:location }} />}
-    //     </React.Fragment>
-    // )
-}
+        // <React.Fragment>
+            user ? <Outlet /> : <Navigate to='/sign-in' replace state={{ from:location }} />
+        // {/* </React.Fragment> */}
+    );
+};
 
 export default PrivateRoute;

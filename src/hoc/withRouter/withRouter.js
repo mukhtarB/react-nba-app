@@ -1,5 +1,8 @@
 import React from "react";
 import { useParams, useNavigate, useLocation } from "react-router";
+// import NewsList from "../../widgets/NewsList/newsList";
+// import NewsSlider from "../../widgets/NewsSlider/slider";
+// import VideoList from "../../widgets/VideosList/videosList";
 
 const withRouterHOC = WrappedComponent => props => {
     const params = useParams();
@@ -25,3 +28,4 @@ export default withRouterHOC;
 // signIn,
 // NewsArticles -> resolved
 // Uplolader
+// VideoList, NewsSlider, NewsList
