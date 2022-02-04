@@ -139,7 +139,6 @@ const SignIn = () => {
                     .then( () => {
                         location.state?.from ?
                             navigate(location.state.from.pathname, {replace: true})
-                            // console.log(location, location.state.from.pathname)
                             :
                             navigate('/');
                     })
