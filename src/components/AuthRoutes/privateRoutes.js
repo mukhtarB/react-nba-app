@@ -36,3 +36,23 @@ const PrivateRoute = ({children}) => {
 };
 
 export default PrivateRoute;
+
+
+// METHOD 1b
+// import React from "react";
+// import { Navigate, useLocation } from "react-router-dom";
+// import { firebase } from "../../firebase";
+
+// const PrivateRoute = ({children}) => {   
+
+//     const location = useLocation();
+//     const user = firebase.auth().currentUser;
+
+//     return (
+//         <React.Fragment>
+//             { user ? children : <Navigate to='/sign-in' replace state={{ from:location }} />}
+//         </React.Fragment>
+//     );
+// };
+
+// export default PrivateRoute;
