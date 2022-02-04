@@ -12,7 +12,6 @@ import Dashboard from "./components/Dashboard/dashboard";
 import PrivateRoute from "./components/AuthRoutes/privateRoutes";
 
 const Routing = (props) => {
-    console.log("routing", props.user)
     return(
         <Layout user={props.user}>
             <Routes>
@@ -22,9 +21,18 @@ const Routing = (props) => {
                 <Route path='/articles/:id' element={<NewsArticles />} />
                 <Route path='/videos/:id' element={<VideoArticle />} />
                 <Route path='/sign-in' element={<SignIn />} />
-                <Route user={props.user} element={<PrivateRoute />} >
+                
+                {/* METHODs 0 */}
+                {/* <Route element={<PrivateRoute />} >
                     <Route path='/dashboard' element={<Dashboard />} />
-                </Route>
+                </Route> */}
+
+                {/* METHODs 1a & 1b */}
+                <Route path='/dashboard' element={
+                    <PrivateRoute {...props}>
+                        <Dashboard />
+                    </PrivateRoute>
+                } />
             </Routes>
         </Layout>
     )
