@@ -108,7 +108,11 @@ const NewsArticles = () => {
                 >
 
                 </div>
-                <div className={style.articleText}>
+                <div className={style.articleText}
+                    dangerouslySetInnerHTML={{
+                        __html:article.body
+                    }}
+                >
                     {article.body}
                 </div>
             </div>
