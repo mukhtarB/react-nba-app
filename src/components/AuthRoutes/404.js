@@ -1,9 +1,9 @@
 import React from "react";
 
-const 404 = () => (
+const F404 = () => (
     <div>
-        This is a 404 page.
+        404 Error, The Page Your Trying to load doesn't exist.
     </div>
 )
 
-export default 404;
+export default F404;
