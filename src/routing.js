@@ -10,6 +10,7 @@ import VideosMain from "./components/Articles/Videos/Main";
 import SignIn from "./components/signIn/signIn";
 import Dashboard from "./components/Dashboard/dashboard";
 import PrivateRoute from "./components/AuthRoutes/privateRoutes";
+import F404 from "./components/AuthRoutes/404";
 
 const Routing = (props) => {
     return(
@@ -33,6 +34,7 @@ const Routing = (props) => {
                         <Dashboard />
                     </PrivateRoute>
                 } />
+                <Route path="*" element={<F404 />} />
             </Routes>
         </Layout>
     )
